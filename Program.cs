@@ -1,9 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using Floréa.Data;
+using Floréa.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite("Data Source=flowershop.db"));
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
