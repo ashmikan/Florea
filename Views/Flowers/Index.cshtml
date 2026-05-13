@@ -1,0 +1,25 @@
+@model IEnumerable<Floréa.Models.Flower>
+
+<div class="container py-4">
+    <h1 class="mb-4">Flowers</h1>
+
+    @if (!Model.Any())
+    {
+        <p class="text-muted">No flowers are available yet.</p>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-lg h-100">
+                        <div class="card-body">
+                            <h4 class="card-title">@item.Name</h4>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
