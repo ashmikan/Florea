@@ -1,19 +1,73 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    ViewData["BodyClass"] = "home-page";
 }
 
-<div class="container text-center mt-5">
+<section class="home-hero">
+    <div class="home-hero__overlay"></div>
+    <div class="container position-relative">
+        <div class="row align-items-center min-vh-75 py-5">
+            <div class="col-lg-6 text-white mb-5 mb-lg-0">
+                <span class="home-kicker">Floréa boutique</span>
+                <h1 class="display-3 fw-bold mt-3 mb-4">
+                    Where every bloom begins a magical moment!✨
+                </h1>
+                <p class="lead mb-4 home-copy">
+                    Pick a vibe, preview a bouquet, and jump straight into the shop. Fresh, romantic, and celebratory blooms in one place.
+                </p>
+                <div class="d-flex flex-wrap gap-3 mb-4">
+                    <a href="/Flowers" class="btn btn-light btn-lg px-4">Shop Now</a>
+                    <a href="/Cart" class="btn btn-outline-light btn-lg px-4">View Cart</a>
+                </div>
+                <div class="home-stats">
+                    <div class="home-stat">
+                        <strong>24h</strong>
+                        <span>Fresh delivery</span>
+                    </div>
+                    <div class="home-stat">
+                        <strong>3 moods</strong>
+                        <span>Romantic, fresh, celebration</span>
+                    </div>
+                    <div class="home-stat">
+                        <strong>1 tap</strong>
+                        <span>Preview your bouquet</span>
+                    </div>
+                </div>
+            </div>
 
-    <h1 class="display-3 text-danger">
-        Blooming Flower Shop
-    </h1>
+            <div class="col-lg-5 offset-lg-1">
+                <div class="home-panel shadow-lg">
+                    <div class="home-panel__top">
+                        <span class="badge rounded-pill text-bg-light">Interactive bouquet</span>
+                        <h2 class="h3 mt-3 mb-2" id="bouquetTitle">Romantic Rose Edit</h2>
+                        <p class="text-muted mb-0" id="bouquetDescription">
+                            Deep red roses with a soft golden accent for classic date-night energy.
+                        </p>
+                    </div>
 
-    <p class="lead">
-        Fresh flowers delivered with love
-    </p>
+                    <div class="home-panel__image" id="bouquetImage" aria-hidden="true"></div>
 
-    <a href="/Flowers" class="btn btn-success btn-lg">
-        Shop Now
-    </a>
+                    <div class="home-mood-switcher" role="tablist" aria-label="Bouquet moods">
+                        <button class="mood-chip active" type="button" data-title="Romantic Rose Edit" data-description="Deep red roses with a soft golden accent for classic date-night energy." data-price="$25" data-image="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=900&q=80">
+                            Romantic
+                        </button>
+                        <button class="mood-chip" type="button" data-title="Fresh Tulip Glow" data-description="Bright tulips and airy greens for a clean, modern bouquet." data-price="$18" data-image="https://images.unsplash.com/photo-1520763185298-1b434c919102?auto=format&fit=crop&w=900&q=80">
+                            Fresh
+                        </button>
+                        <button class="mood-chip" type="button" data-title="Celebration Bloom Box" data-description="A lively mix designed to feel festive, colorful, and generous." data-price="$32" data-image="https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=900&q=80">
+                            Celebration
+                        </button>
+                    </div>
 
-</div>
+                    <div class="home-panel__footer">
+                        <div>
+                            <span class="text-uppercase text-muted small">Starting at</span>
+                            <div class="display-6 fw-semibold" id="bouquetPrice">$25</div>
+                        </div>
+                        <a href="/Flowers" class="btn btn-primary btn-lg btn-explore">Explore Flowers</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

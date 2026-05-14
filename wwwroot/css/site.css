@@ -21,6 +21,236 @@ body {
   margin-bottom: 60px;
 }
 
+body.home-page {
+  background-image:
+    linear-gradient(135deg, rgba(19, 28, 40, 0.65), rgba(76, 23, 34, 0.45)),
+    url('https://images.unsplash.com/photo-1496062031456-07b8f162a322?auto=format&fit=crop&w=1800&q=80');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+body.home-page .navbar {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.18) !important;
+  backdrop-filter: blur(12px);
+}
+
+body.home-page .navbar .nav-link,
+body.home-page .navbar .navbar-brand,
+body.home-page footer,
+body.home-page footer a {
+  color: #fff !important;
+}
+
+body.home-page footer {
+  background: rgba(17, 24, 39, 0.18);
+  backdrop-filter: blur(12px);
+}
+
+/* Explore Flowers button styles */
+.btn-explore {
+  background: linear-gradient(90deg, #e34a6f 0%, #c24b8d 50%, #8b5cf6 100%);
+  color: #fff;
+  border: none !important;
+  border-radius: 12px;
+  padding: 0.7rem 1.25rem;
+  box-shadow: 0 6px 18px rgba(139, 92, 246, 0.18);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+  animation: float 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.btn-explore:hover,
+.btn-explore:focus {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(139, 92, 246, 0.26);
+  filter: brightness(1.08);
+  animation-play-state: paused;
+  outline: none;
+}
+
+.btn-explore:active {
+  transform: translateY(-2px) scale(0.995);
+  animation-play-state: paused;
+}
+
+@media (max-width: 576px) {
+  .btn-explore {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border-radius: 10px;
+  }
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-explore {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+.home-hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 32px;
+  min-height: calc(100vh - 180px);
+  margin: 1.5rem auto 0;
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  background-image:
+    linear-gradient(135deg, rgba(19, 28, 40, 0.82), rgba(76, 23, 34, 0.55)),
+  background-size: cover;
+  background-position: center;
+}
+
+.home-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.18), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(255, 200, 214, 0.12), transparent 30%);
+}
+
+.min-vh-75 {
+  min-height: 75vh;
+}
+
+.home-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.home-copy {
+  max-width: 42rem;
+}
+
+.home-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.home-stat {
+  padding: 1rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+}
+
+.home-stat strong,
+.home-stat span {
+  display: block;
+}
+
+.home-stat strong {
+  font-size: 1.1rem;
+}
+
+.home-stat span {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.92rem;
+}
+
+.home-panel {
+  border-radius: 28px;
+  padding: 1.25rem;
+  background: rgba(255, 255, 255, 0.96);
+  color: #1f2937;
+}
+
+.home-panel__top {
+  padding: 0.5rem 0.5rem 1rem;
+}
+
+.home-panel__image {
+  height: 280px;
+  border-radius: 24px;
+  background-image: url('https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=900&q=80');
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+  transition: background-image 0.35s ease, transform 0.35s ease;
+}
+
+.home-mood-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.mood-chip {
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #374151;
+  border-radius: 999px;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.mood-chip:hover,
+.mood-chip:focus-visible {
+  transform: translateY(-2px);
+  border-color: #b45309;
+}
+
+.mood-chip.active {
+  background: #b45309;
+  border-color: #b45309;
+  color: #fff;
+}
+
+.home-panel__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  padding: 0.5rem;
+}
+
+@media (max-width: 991px) {
+  .home-hero {
+    border-radius: 24px;
+  }
+
+  .home-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .home-panel__footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 576px) {
+  .home-panel {
+    padding: 1rem;
+  }
+
+  .home-panel__image {
+    height: 220px;
+  }
+}
+
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);
   text-align: end;
@@ -28,4 +258,13 @@ body {
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
+}
+
+.card {
+  transition: 0.3s;
+  border-radius: 20px;
+}
+
+.card:hover {
+  transform: scale(1.05);
 }
