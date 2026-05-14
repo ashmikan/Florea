@@ -1,47 +1,667 @@
 @model IEnumerable<Floréa.Models.Flower>
 
-<div class="container py-4">
-    <h1 class="mb-4">Flowers</h1>
+<div class="flowers-page py-4">
+    <div class="container-fluid">
+        <!-- Header -->
+        <div class="flowers-header mb-5">
+            <h1 class="display-4 fw-bold mb-2">Our Flowers</h1>
+            <p class="lead text-muted">Discover our beautiful collection of fresh flowers</p>
+        </div>
 
-    <form asp-action="Index" method="get">
-        <input type="text"
-           name="searchString"
-           placeholder="Search flowers">
+        <div class="row g-4">
+            <!-- Sidebar Filters -->
+            <div class="col-lg-3">
+                <div class="filters-panel sticky-lg-top" style="top: 20px;">
+                    <!-- Search -->
+                    <div class="filter-group mb-4">
+                        <label class="filter-label fw-bold mb-3">Search</label>
+                        <input type="text" 
+                               id="searchInput" 
+                               class="form-control filter-search" 
+                               placeholder="Search flowers..."
+                               aria-label="Search flowers">
+                    </div>
 
-        <button type="submit"
-            class="btn btn-primary">
-        Search
-        </button>
-    </form>
+                    <!-- Sort -->
+                    <div class="filter-group mb-4">
+                        <label class="filter-label fw-bold mb-3">Sort By</label>
+                        <select id="sortSelect" class="form-select">
+                            <option value="name-asc">Name (A-Z)</option>
+                            <option value="name-desc">Name (Z-A)</option>
+                            <option value="price-low">Price (Low to High)</option>
+                            <option value="price-high">Price (High to Low)</option>
+                        </select>
+                    </div>
 
-    @if (!Model.Any())
-    {
-        <p class="text-muted">No flowers are available yet.</p>
-    }
-    else
-    {
-        <div class="row">
-            @foreach (var item in Model)
-            {
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-lg h-100">
-                        <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name" />
-                        <div class="card-body">
-                            <h4 class="card-title">@item.Name</h4>
-                            <p class="card-text">@item.Description</p>
-                            <p class="fw-bold">$@item.Price</p>
-                            <form asp-controller="Cart" asp-action="Add" method="post">
-                                <input type="hidden" name="Id" value="@item.Id" />
-                                <input type="hidden" name="Name" value="@item.Name" />
-                                <input type="hidden" name="Description" value="@item.Description" />
-                                <input type="hidden" name="Price" value="@item.Price" />
-                                <input type="hidden" name="ImageUrl" value="@item.ImageUrl" />
-                                <button type="submit" class="btn btn-primary">Add to Cart</button>
-                            </form>
+                    <!-- Price Range -->
+                    <div class="filter-group mb-4">
+                        <label class="filter-label fw-bold mb-3">Price Range</label>
+                        <div class="d-flex gap-2 mb-3">
+                            <input type="number" 
+                                   id="priceMin" 
+                                   class="form-control form-control-sm" 
+                                   placeholder="Min" 
+                                   min="0"
+                                   aria-label="Minimum price">
+                            <input type="number" 
+                                   id="priceMax" 
+                                   class="form-control form-control-sm" 
+                                   placeholder="Max" 
+                                   min="0"
+                                   aria-label="Maximum price">
+                        </div>
+                        <div class="price-display text-muted small">
+                            <span id="priceDisplay">All prices</span>
                         </div>
                     </div>
+
+                    <!-- Category Filter -->
+                    <div class="filter-group mb-4">
+                        <label class="filter-label fw-bold mb-3">Category</label>
+                        <div id="categoryFilters" class="category-checkboxes">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </div>
+
+                    <!-- Clear Filters -->
+                    <button id="clearFilters" class="btn btn-outline-secondary w-100">
+                        Clear Filters
+                    </button>
                 </div>
-            }
+            </div>
+
+            <!-- Grid Content -->
+            <div class="col-lg-9">
+                <!-- Results Info -->
+                <div class="results-header mb-4 d-flex justify-content-between align-items-center">
+                    <p class="text-muted mb-0">
+                        Showing <strong id="resultCount">0</strong> flowers
+                    </p>
+                    <div class="view-controls">
+                        <button class="btn btn-sm btn-outline-secondary grid-toggle active" data-grid="3" title="3 columns">
+                            <i class="bi bi-grid-3x3-gap"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary grid-toggle" data-grid="4" title="4 columns">
+                            <i class="bi bi-grid-fill"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Grid -->
+                @if (!Model.Any())
+                {
+                    <div class="empty-state text-center py-5">
+                        <p class="text-muted mb-3">No flowers found. Try adjusting your filters.</p>
+                    </div>
+                }
+                else
+                {
+                    <div id="flowersGrid" class="flowers-grid">
+                        @foreach (var item in Model)
+                        {
+                            <div class="flower-card-wrapper" 
+                                 data-id="@item.Id" 
+                                 data-name="@item.Name"
+                                 data-price="@item.Price"
+                                 data-category="@item.Category"
+                                 data-description="@item.Description">
+                                <div class="flower-card">
+                                    <div class="flower-image-container">
+                                        <img src="@item.ImageUrl" 
+                                             alt="@item.Name" 
+                                             class="flower-image"
+                                             loading="lazy">
+                                        <div class="overlay">
+                                            <button class="quick-view-btn" data-id="@item.Id" title="Quick view">
+                                                <span>Quick View</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="flower-info">
+                                        <h3 class="flower-name">@item.Name</h3>
+                                        <p class="flower-description">@item.Description</p>
+                                        @if (!string.IsNullOrEmpty(item.Category))
+                                        {
+                                            <span class="badge bg-light text-dark mb-2">@item.Category</span>
+                                        }
+                                        <div class="flower-footer mt-3">
+                                            <span class="flower-price">$@item.Price.ToString("F2")</span>
+                                            <form asp-controller="Cart" 
+                                                  asp-action="Add" 
+                                                  method="post"
+                                                  class="add-to-cart-form d-inline">
+                                                <input type="hidden" name="Id" value="@item.Id" />
+                                                <input type="hidden" name="Name" value="@item.Name" />
+                                                <input type="hidden" name="Description" value="@item.Description" />
+                                                <input type="hidden" name="Price" value="@item.Price" />
+                                                <input type="hidden" name="ImageUrl" value="@item.ImageUrl" />
+                                                <button type="submit" class="btn btn-sm btn-primary add-btn">
+                                                    <span class="btn-text">Add to Cart</span>
+                                                    <span class="btn-icon">✓</span>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
         </div>
-    }
+    </div>
 </div>
+
+<!-- Quick View Modal -->
+<div class="modal fade" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="quickViewLabel">Quick View</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img id="modalImage" src="" alt="" class="img-fluid rounded">
+                    </div>
+                    <div class="col-md-6">
+                        <h3 id="modalName"></h3>
+                        <p class="text-muted" id="modalCategory"></p>
+                        <p id="modalDescription"></p>
+                        <div class="mb-3">
+                            <span class="h4" id="modalPrice"></span>
+                        </div>
+                        <form id="modalAddForm" method="post" action="/Cart/Add">
+                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                Add to Cart
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.flowers-page {
+    background: linear-gradient(135deg, #f5f7fa 0%, #fef5f3 100%);
+    min-height: 100vh;
+}
+
+.flowers-header {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.filters-panel {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.filter-group {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.filter-group:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.filter-label {
+    display: block;
+    font-size: 0.95rem;
+    color: #1f2937;
+}
+
+.filter-search {
+    border-radius: 10px;
+    border: 2px solid #e5e7eb;
+    transition: border-color 0.2s;
+}
+
+.filter-search:focus {
+    border-color: #e34a6f;
+    box-shadow: 0 0 0 3px rgba(227, 74, 111, 0.1);
+}
+
+.form-select {
+    border-radius: 10px;
+    border: 2px solid #e5e7eb;
+}
+
+.category-checkboxes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.category-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.category-checkbox input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.category-checkbox label {
+    margin: 0;
+    cursor: pointer;
+    flex: 1;
+}
+
+.flowers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.flowers-grid.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.flower-card-wrapper {
+    opacity: 1;
+    animation: scaleIn 0.3s ease;
+}
+
+.flower-card-wrapper.hidden {
+    display: none;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.flower-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.flower-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.flower-image-container {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, #f0f4f8 0%, #f9f5f0 100%);
+}
+
+.flower-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.flower-card:hover .flower-image {
+    transform: scale(1.08);
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.flower-card:hover .overlay {
+    opacity: 1;
+}
+
+.quick-view-btn {
+    background: white;
+    color: #e34a6f;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 24px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quick-view-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.flower-info {
+    padding: 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.flower-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    color: #1f2937;
+}
+
+.flower-description {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin: 0 0 0.75rem 0;
+    flex-grow: 1;
+}
+
+.badge {
+    font-size: 0.75rem !important;
+    padding: 0.4rem 0.8rem !important;
+}
+
+.flower-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: auto;
+}
+
+.flower-price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #e34a6f;
+}
+
+.add-to-cart-form {
+    flex: 1;
+}
+
+.add-btn {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.add-btn .btn-text {
+    transition: opacity 0.2s ease;
+}
+
+.add-btn .btn-icon {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.add-btn.added {
+    background-color: #10b981 !important;
+}
+
+.add-btn.added .btn-text {
+    opacity: 0;
+}
+
+.add-btn.added .btn-icon {
+    opacity: 1;
+}
+
+.results-header {
+    padding: 0.5rem 0;
+}
+
+.view-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.grid-toggle {
+    padding: 0.4rem 0.75rem;
+}
+
+.grid-toggle.active {
+    background-color: #e34a6f !important;
+    color: white !important;
+    border-color: #e34a6f !important;
+}
+
+.empty-state {
+    background: white;
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 1024px) {
+    .flowers-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .flowers-grid.grid-4 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .flowers-grid,
+    .flowers-grid.grid-4 {
+        grid-template-columns: 1fr;
+    }
+
+    .filters-panel {
+        margin-bottom: 2rem;
+    }
+
+    .results-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const sortSelect = document.getElementById('sortSelect');
+    const priceMin = document.getElementById('priceMin');
+    const priceMax = document.getElementById('priceMax');
+    const clearFiltersBtn = document.getElementById('clearFilters');
+    const flowersGrid = document.getElementById('flowersGrid');
+    const flowersWrapper = document.querySelectorAll('.flower-card-wrapper');
+    const resultCount = document.getElementById('resultCount');
+    const categoryFiltersDiv = document.getElementById('categoryFilters');
+    const priceDisplay = document.getElementById('priceDisplay');
+    const quickViewModal = new bootstrap.Modal(document.getElementById('quickViewModal'));
+    const quickViewButtons = document.querySelectorAll('.quick-view-btn');
+
+    // Get unique categories
+    function getCategories() {
+        const categories = new Set();
+        flowersWrapper.forEach(wrapper => {
+            const category = wrapper.dataset.category;
+            if (category) categories.add(category);
+        });
+        return Array.from(categories).sort();
+    }
+
+    // Populate categories
+    function populateCategories() {
+        const categories = getCategories();
+        categoryFiltersDiv.innerHTML = categories.map(cat => `
+            <div class="category-checkbox">
+                <input type="checkbox" id="cat-${cat}" value="${cat}">
+                <label for="cat-${cat}">${cat}</label>
+            </div>
+        `).join('');
+
+        document.querySelectorAll('.category-checkbox input').forEach(checkbox => {
+            checkbox.addEventListener('change', filterFlowers);
+        });
+    }
+
+    // Filter flowers
+    function filterFlowers() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const minPrice = parseFloat(priceMin.value) || 0;
+        const maxPrice = parseFloat(priceMax.value) || Infinity;
+        const selectedCategories = Array.from(document.querySelectorAll('.category-checkbox input:checked')).map(cb => cb.value);
+
+        let visibleCount = 0;
+
+        flowersWrapper.forEach(wrapper => {
+            const name = wrapper.dataset.name.toLowerCase();
+            const description = wrapper.dataset.description.toLowerCase();
+            const price = parseFloat(wrapper.dataset.price);
+            const category = wrapper.dataset.category;
+
+            const matchesSearch = !searchTerm || name.includes(searchTerm) || description.includes(searchTerm);
+            const matchesPrice = price >= minPrice && price <= maxPrice;
+            const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(category);
+
+            if (matchesSearch && matchesPrice && matchesCategory) {
+                wrapper.classList.remove('hidden');
+                visibleCount++;
+            } else {
+                wrapper.classList.add('hidden');
+            }
+        });
+
+        sortFlowers();
+        resultCount.textContent = visibleCount;
+        updatePriceDisplay();
+    }
+
+    // Sort flowers
+    function sortFlowers() {
+        const sortValue = sortSelect.value;
+        const items = Array.from(flowersWrapper).filter(w => !w.classList.contains('hidden'));
+
+        items.sort((a, b) => {
+            switch (sortValue) {
+                case 'name-asc':
+                    return a.dataset.name.localeCompare(b.dataset.name);
+                case 'name-desc':
+                    return b.dataset.name.localeCompare(a.dataset.name);
+                case 'price-low':
+                    return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+                case 'price-high':
+                    return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+                default:
+                    return 0;
+            }
+        });
+
+        items.forEach(item => flowersGrid.appendChild(item));
+    }
+
+    // Update price display
+    function updatePriceDisplay() {
+        const min = priceMin.value;
+        const max = priceMax.value;
+        if (min || max) {
+            priceDisplay.textContent = `$${min || '0'} - $${max || '∞'}`;
+        } else {
+            priceDisplay.textContent = 'All prices';
+        }
+    }
+
+    // Clear filters
+    function clearAllFilters() {
+        searchInput.value = '';
+        priceMin.value = '';
+        priceMax.value = '';
+        sortSelect.value = 'name-asc';
+        document.querySelectorAll('.category-checkbox input').forEach(cb => cb.checked = false);
+        filterFlowers();
+    }
+
+    // Grid toggle
+    document.querySelectorAll('.grid-toggle').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.grid-toggle').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const gridCols = this.dataset.grid;
+            if (gridCols === '4') {
+                flowersGrid.classList.add('grid-4');
+            } else {
+                flowersGrid.classList.remove('grid-4');
+            }
+        });
+    });
+
+    // Quick view
+    quickViewButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const id = this.dataset.id;
+            const wrapper = document.querySelector(`[data-id="${id}"]`);
+            document.getElementById('modalImage').src = wrapper.querySelector('.flower-image').src;
+            document.getElementById('modalName').textContent = wrapper.dataset.name;
+            document.getElementById('modalCategory').textContent = wrapper.dataset.category || '';
+            document.getElementById('modalDescription').textContent = wrapper.dataset.description;
+            document.getElementById('modalPrice').textContent = '$' + parseFloat(wrapper.dataset.price).toFixed(2);
+
+            const form = document.getElementById('modalAddForm');
+            form.innerHTML = `
+                <input type="hidden" name="Id" value="${id}" />
+                <input type="hidden" name="Name" value="${wrapper.dataset.name}" />
+                <input type="hidden" name="Description" value="${wrapper.dataset.description}" />
+                <input type="hidden" name="Price" value="${wrapper.dataset.price}" />
+                <input type="hidden" name="ImageUrl" value="${wrapper.querySelector('.flower-image').src}" />
+                <button type="submit" class="btn btn-primary btn-lg w-100">Add to Cart</button>
+            `;
+
+            quickViewModal.show();
+        });
+    });
+
+    // Add to cart feedback
+    document.querySelectorAll('.add-to-cart-form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            const btn = this.querySelector('.add-btn');
+            btn.classList.add('added');
+            setTimeout(() => {
+                btn.classList.remove('added');
+            }, 2000);
+        });
+    });
+
+    // Event listeners
+    searchInput.addEventListener('input', filterFlowers);
+    sortSelect.addEventListener('change', filterFlowers);
+    priceMin.addEventListener('input', filterFlowers);
+    priceMax.addEventListener('input', filterFlowers);
+    clearFiltersBtn.addEventListener('click', clearAllFilters);
+
+    // Initialize
+    populateCategories();
+    filterFlowers();
+    resultCount.textContent = flowersWrapper.length;
+});
+</script>
