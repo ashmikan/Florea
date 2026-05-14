@@ -1,0 +1,52 @@
+@model Floréa.Models.Cart
+
+<div class="container py-4">
+    <h1 class="mb-4">Your Cart</h1>
+
+    @if (!Model.CartItems.Any())
+    {
+        <p class="text-muted">Your cart is empty.</p>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>Flower</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.CartItems)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@item.Flower.Name</strong><br />
+                                <small class="text-muted">@item.Flower.Description</small>
+                            </td>
+                            <td>$@item.Flower.Price</td>
+                            <td>@item.Quantity</td>
+                            <td>$@(item.Flower.Price * item.Quantity)</td>
+                            <td>
+                                <form asp-controller="Cart" asp-action="Remove" method="post">
+                                    <input type="hidden" name="flowerId" value="@item.Flower.Id" />
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="3" class="text-end">Total</th>
+                        <th colspan="2">$@Model.CartItems.Sum(item => item.Flower.Price * item.Quantity)</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    }
+</div>

@@ -11,6 +11,7 @@ public class FlowersController : Controller
         {
             new Flower
             {
+                Id = 1,
                 Name = "Rose Bouquet",
                 Description = "Romantic red roses",
                 Price = 25,
@@ -18,6 +19,7 @@ public class FlowersController : Controller
             },
             new Flower
             {
+                Id = 2,
                 Name = "Tulips",
                 Description = "Fresh tulips",
                 Price = 18,
