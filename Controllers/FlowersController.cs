@@ -7,6 +7,8 @@ public class FlowersController : Controller
 {
     public IActionResult Index()
     {
+        ViewData["BodyClass"] = "flowers-page";
+        
         var flowers = new List<Flower>
         {
             new Flower
