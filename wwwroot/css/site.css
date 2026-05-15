@@ -49,6 +49,12 @@ body.home-page footer {
   backdrop-filter: blur(12px);
 }
 
+body.flowers-page {
+  background: linear-gradient(135deg, #faf5f7 0%, #fef5f3 100%);
+  min-height: 100vh;
+  padding-bottom: 4rem;
+}
+
 /* Explore Flowers button styles */
 .btn-explore {
   background: linear-gradient(90deg, #e34a6f 0%, #c24b8d 50%, #8b5cf6 100%);
