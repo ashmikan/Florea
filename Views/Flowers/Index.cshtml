@@ -186,13 +186,13 @@
 
 <style>
 .flowers-page {
-    background: linear-gradient(135deg, #f5f7fa 0%, #fef5f3 100%);
+    background: linear-gradient(135deg, #faf5f7 0%, #fef5f3 100%);
     min-height: 100vh;
+    padding: 1.5rem;
 }
 
 .flowers-header {
     text-align: center;
-    padding: 2rem 0;
 }
 
 .filters-panel {
@@ -263,7 +263,7 @@
     animation: fadeIn 0.3s ease;
 }
 
-@keyframes fadeIn {
+@@keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
@@ -281,7 +281,7 @@
     display: none;
 }
 
-@keyframes scaleIn {
+@@keyframes scaleIn {
     from {
         opacity: 0;
         transform: scale(0.95);
@@ -374,7 +374,7 @@
 .flower-description {
     font-size: 0.85rem;
     color: #6b7280;
-    margin: 0 0 0.75rem 0;
+    margin: 0 0 0.5rem 0;
     flex-grow: 1;
 }
 
@@ -387,7 +387,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0.75rem;
+    gap: 1rem;
     margin-top: auto;
 }
 
@@ -457,7 +457,7 @@
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
-@media (max-width: 1024px) {
+@@media (max-width: 1024px) {
     .flowers-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -467,7 +467,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@@media (max-width: 768px) {
     .flowers-grid,
     .flowers-grid.grid-4 {
         grid-template-columns: 1fr;
