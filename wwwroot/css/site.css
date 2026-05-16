@@ -60,7 +60,7 @@ body.flowers-page {
   background: linear-gradient(90deg, #e34a6f 0%, #c24b8d 50%, #8b5cf6 100%);
   color: #fff;
   border: none !important;
-  border-radius: 12px;
+  border-radius: 15px;
   padding: 0.7rem 1.25rem;
   box-shadow: 0 6px 18px rgba(139, 92, 246, 0.18);
   transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
@@ -273,4 +273,63 @@ body.flowers-page {
 
 .card:hover {
   transform: scale(1.05);
+}
+
+/* Oval navbar styles */
+.oval-navbar {
+  padding: 1.25rem 0.5rem;
+  display: flex;
+  justify-content: center;
+  background: transparent;
+}
+
+.oval-nav {
+  display: inline-flex;
+  gap: 0.55rem;
+  padding: 0.5rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #c99ca7, #e498c2);
+  align-items: center;
+  backdrop-filter: blur(8px);
+}
+
+.oval-nav-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  color: #1f2937;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.oval-nav-item .oval-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+  display: inline-block;
+  font-size: 1.05rem;
+}
+
+.oval-nav-item .oval-label { display:none; }
+
+.oval-nav-item:hover {
+  transform: translateY(-4px);
+}
+
+.oval-nav-item.active {
+  background: linear-gradient(90deg, #f65c80, #be2e7d);
+  color: #ececec;
+  box-shadow: 0 12px 30px rgba(139, 92, 246, 0.18);
+}
+
+@media (max-width: 576px) {
+  .oval-nav { gap: 0.35rem; padding: 0.25rem; }
+  .oval-nav-item { padding: 0.5rem; }
+  .oval-nav-item .oval-label { display:none; }
+}
+
+@media (min-width: 992px) {
+  .oval-nav-item .oval-label { display:inline-block; font-size:0.95rem; }
 }
