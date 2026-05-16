@@ -1,0 +1,33 @@
+@* Oval-shaped navigation component *@
+@{
+  var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+  var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+
+  string ActiveIf(string controller, string action)
+  {
+    return string.Equals(currentController, controller, System.StringComparison.OrdinalIgnoreCase) &&
+           string.Equals(currentAction, action, System.StringComparison.OrdinalIgnoreCase)
+      ? "active"
+      : string.Empty;
+  }
+}
+
+<nav class="oval-navbar" role="navigation" aria-label="Primary oval navigation">
+  <div class="oval-nav container d-flex justify-content-center align-items-center">
+    <a class="oval-nav-item @ActiveIf("Home", "Index")" asp-area="" asp-controller="Home" asp-action="Index">
+      <span class="oval-label">Home</span>
+    </a>
+
+    <a class="oval-nav-item @ActiveIf("Flowers", "Index")" asp-area="" asp-controller="Flowers" asp-action="Index">
+      <span class="oval-label">Flowers</span>
+    </a>
+
+    <a class="oval-nav-item @ActiveIf("Cart", "Index")" asp-area="" asp-controller="Cart" asp-action="Index">
+      <span class="oval-label">Cart</span>
+    </a>
+
+    <a class="oval-nav-item @ActiveIf("Home", "Privacy")" asp-area="" asp-controller="Home" asp-action="Privacy">
+      <span class="oval-label">Profile</span>
+    </a>
+  </div>
+</nav>
