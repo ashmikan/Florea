@@ -291,6 +291,7 @@ body.flowers-page {
   background: linear-gradient(90deg, #c99ca7, #e498c2);
   align-items: center;
   backdrop-filter: blur(8px);
+  opacity: 80%;
 }
 
 .oval-nav-item {

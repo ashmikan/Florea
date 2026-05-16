@@ -188,7 +188,6 @@
 .flowers-page {
     background: linear-gradient(135deg, #faf5f7 0%, #fef5f3 100%);
     min-height: 100vh;
-    padding: 1.5rem;
 }
 
 .flowers-header {
@@ -232,6 +231,23 @@
 .form-select {
     border-radius: 10px;
     border: 2px solid #e5e7eb;
+}
+
+/* Clear Filters button color */
+#clearFilters {
+    background: white !important;
+    color: #e34a6f !important;
+    border: 2px solid #e34a6f !important;
+    border-radius: 15px;
+    padding: 0.55rem 0.75rem;
+    font-weight: 600;
+    transition: background 0.18s ease, transform 0.12s ease;
+}
+
+#clearFilters:hover {
+    background: #e34a6f !important;
+    transform: translateY(-2px);
+    color: white !important;
 }
 
 .category-checkboxes {
@@ -405,11 +421,27 @@
     width: 100%;
     position: relative;
     overflow: hidden;
-    border-radius: 10px;
+    border-radius: 12px;
     transition: all 0.2s ease;
+    background: #b45309;
+    border-color: #b45309;
 }
 
 .add-btn .btn-text {
+    transition: opacity 0.2s ease;
+    font-weight: 600;
+}
+
+.add-btn:hover {
+    background-color: white !important;
+    border-color: #b45309 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(185, 16, 117, 0.3);
+}
+
+.add-btn .btn-text:hover {
+    color: black;
+    font-weight: 620;
     transition: opacity 0.2s ease;
 }
 

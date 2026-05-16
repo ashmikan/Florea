@@ -17,6 +17,7 @@ public class FlowersController : Controller
                 Name = "Rose Bouquet",
                 Description = "Romantic red roses",
                 Price = 25,
+                Category = "Roses",
                 ImageUrl = "https://images.unsplash.com/photo-1518895949257-7621c3c786d7"
             },
             new Flower
@@ -25,6 +26,7 @@ public class FlowersController : Controller
                 Name = "Tulips",
                 Description = "Fresh tulips",
                 Price = 18,
+                Category = "Spring",
                 ImageUrl = "https://images.unsplash.com/photo-1520763185298-1b434c919102"
             }
         };
