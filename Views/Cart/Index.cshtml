@@ -1,16 +1,21 @@
 @model Floréa.Models.Cart
 
-<div class="container py-4">
+@{ ViewData["BodyClass"] = "cart-page"; }
+
+<div class="container cart-container py-4">
     <h1 class="mb-4">Your Cart</h1>
 
     @if (!Model.CartItems.Any())
     {
-        <p class="text-muted">Your cart is empty.</p>
+        <div class="cart-panel cart-empty">
+            <p class="text-muted">Your cart is empty.</p>
+        </div>
     }
     else
     {
-        <div class="table-responsive">
-            <table class="table align-middle">
+        <div class="cart-panel">
+            <div class="table-responsive">
+                <table class="table align-middle">
                 <thead>
                     <tr>
                         <th>Flower</th>
@@ -48,5 +53,6 @@
                 </tfoot>
             </table>
         </div>
+    </div>
     }
 </div>

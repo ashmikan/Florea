@@ -334,3 +334,137 @@ body.flowers-page {
 @media (min-width: 992px) {
   .oval-nav-item .oval-label { display:inline-block; font-size:0.95rem; }
 }
+
+/* Cart page styles (reuses flowers page background) */
+body.cart-page {
+  background: linear-gradient(135deg, #faf5f7 0%, #fef5f3 100%);
+  min-height: 100vh;
+  padding-bottom: 4rem;
+}
+
+.cart-container {
+  margin-top: 2rem;
+}
+
+.cart-panel {
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: 0 8px 30px rgba(31, 41, 55, 0.06);
+}
+
+.cart-item-row td {
+  vertical-align: middle;
+}
+
+.cart-item-image {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(31, 41, 55, 0.06);
+}
+
+.cart-summary {
+  background: linear-gradient(90deg, #fff, #fff);
+  border-radius: 12px;
+  padding: 1rem;
+  border: 1px solid #eef2f7;
+}
+
+.btn-checkout {
+  background: linear-gradient(90deg, #e34a6f 0%, #c24b8d 50%, #8b5cf6 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 0.65rem 1rem;
+  font-weight: 700;
+  box-shadow: 0 10px 28px rgba(139,92,246,0.14);
+}
+
+.cart-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #6b7280;
+}
+
+@media (max-width: 767px) {
+  .cart-item-image { width: 56px; height: 56px; }
+  .cart-panel { padding: 1rem; }
+}
+
+/* Quantity controls */
+.quantity-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quantity-control .qty-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: #f3f4f6;
+  border: 1px solid #e6e9ef;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.12s ease, transform 0.08s ease;
+}
+
+.quantity-control .qty-btn:hover { transform: translateY(-2px); background: #eef2ff; }
+
+.quantity-control .qty-input {
+  width: 56px;
+  text-align: center;
+  border-radius: 8px;
+  border: 1px solid #eef2f7;
+  padding: 0.35rem 0.5rem;
+}
+
+/* Remove button */
+.remove-btn {
+  background: transparent;
+  border: 1px dashed #fde2e6;
+  color: #b91c1c;
+  padding: 0.35rem 0.6rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.remove-btn:hover { background: #fff5f5; transform: translateY(-2px); }
+
+/* Cart table visual tweaks */
+.table th { border-bottom: 2px solid #f1f5f9; }
+.table td { border-top: 1px solid #f8fafc; }
+.cart-item-name { font-weight: 700; color: #111827; }
+.cart-item-desc { color: #6b7280; font-size: 0.9rem; }
+.price-cell { font-weight: 700; color: #111827; }
+.subtotal-cell { font-weight: 800; color: #111827; }
+
+/* Promo / coupon row */
+.coupon-row { display: flex; gap: 0.5rem; align-items: center; }
+.coupon-row .form-control { max-width: 220px; border-radius: 10px; }
+.coupon-apply { background: #f8fafc; border: 1px solid #e6eef8; padding: 0.45rem 0.7rem; border-radius: 10px; }
+
+/* Sticky summary on wide screens */
+@media (min-width: 992px) {
+  .cart-summary-wrapper { position: sticky; top: 96px; }
+  .cart-summary { box-shadow: 0 20px 40px rgba(31, 41, 55, 0.06); }
+}
+
+/* Little polish */
+.promo-badge { background: linear-gradient(90deg,#fff7ed,#fff1e6); color:#92400e; padding:0.25rem 0.5rem; border-radius:8px; font-weight:700; }
+
+@keyframes popIn {
+  from { transform: scale(0.98); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.cart-panel, .cart-summary { animation: popIn 240ms ease both; }
+
+@media (max-width: 576px) {
+  .coupon-row { flex-direction: column; align-items: stretch; }
+  .coupon-row .form-control { max-width: 100%; }
+}
