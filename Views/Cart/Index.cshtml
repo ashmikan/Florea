@@ -28,14 +28,23 @@
                 <tbody>
                     @foreach (var item in Model.CartItems)
                     {
-                        <tr>
+                        <tr class="cart-item-row">
                             <td>
-                                <strong>@item.Flower.Name</strong><br />
-                                <small class="text-muted">@item.Flower.Description</small>
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="@(string.IsNullOrEmpty(item.Flower.ImageUrl) ? "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&w=150&q=80" : item.Flower.ImageUrl)" alt="@item.Flower.Name" class="cart-item-image" />
+                                    <div>
+                                        <div class="cart-item-name">@item.Flower.Name</div>
+                                        <div class="cart-item-desc">@item.Flower.Description</div>
+                                    </div>
+                                </div>
                             </td>
-                            <td>$@item.Flower.Price</td>
-                            <td>@item.Quantity</td>
-                            <td>$@(item.Flower.Price * item.Quantity)</td>
+                            <td class="price-cell">$@item.Flower.Price</td>
+                            <td>
+                                <div class="quantity-control">
+                                    <span class="qty-input bg-light border-0 fw-bold">@item.Quantity</span>
+                                </div>
+                            </td>
+                            <td class="subtotal-cell">$@(item.Flower.Price * item.Quantity)</td>
                             <td>
                                 <form asp-controller="Cart" asp-action="Remove" method="post">
                                     <input type="hidden" name="flowerId" value="@item.Flower.Id" />
