@@ -30,6 +30,10 @@
       <span class="oval-label">Flowers</span>
     </a>
 
+    <a class="oval-nav-item @ActiveIf("Home", "About")" asp-area="" asp-controller="Home" asp-action="About">
+      <span class="oval-label">About</span>
+    </a>
+
     <a class="oval-nav-item @ActiveIf("Cart", "Index")" asp-area="" asp-controller="Cart" asp-action="Index">
       <span class="oval-label">Cart</span>
     </a>
