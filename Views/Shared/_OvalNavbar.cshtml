@@ -12,34 +12,41 @@
   }
 }
 
-<nav class="oval-navbar" role="navigation" aria-label="Primary oval navigation">
+<nav class="oval-navbar mt-3" role="navigation" aria-label="Primary oval navigation">
 
-  <div class="oval-nav container d-flex justify-content-center align-items-center">
+  <div class="oval-nav container d-flex justify-content-between align-items-center mx-auto" style="max-width: 800px;">
 
-    <div class="navbar-logo-container">
-      <a class="navbar-logo-link" asp-area="" asp-controller="Home" asp-action="Index" title="Floréa Home">
-        <img src="~/images/florea-logo.png" alt="Floréa Logo" class="navbar-logo">
+    <div class="navbar-logo-container me-auto">
+      <a class="navbar-logo-link d-flex align-items-center gap-2 text-decoration-none" asp-area="" asp-controller="Home" asp-action="Index" title="Floréa Home">
+        <span class="fs-4 fw-bold" style="background: linear-gradient(90deg, var(--color-primary), var(--color-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Floréa</span>
       </a>
     </div>
 
-    <a class="oval-nav-item @ActiveIf("Home", "Index")" asp-area="" asp-controller="Home" asp-action="Index">
-      <span class="oval-label">Home</span>
-    </a>
+    <div class="d-flex align-items-center gap-1">
+      <a class="oval-nav-item @ActiveIf("Home", "Index")" asp-area="" asp-controller="Home" asp-action="Index">
+        <i class="bi bi-house-door oval-icon"></i>
+        <span class="oval-label">Home</span>
+      </a>
 
-    <a class="oval-nav-item @ActiveIf("Flowers", "Index")" asp-area="" asp-controller="Flowers" asp-action="Index">
-      <span class="oval-label">Flowers</span>
-    </a>
+      <a class="oval-nav-item @ActiveIf("Flowers", "Index")" asp-area="" asp-controller="Flowers" asp-action="Index">
+        <i class="bi bi-flower1 oval-icon"></i>
+        <span class="oval-label">Flowers</span>
+      </a>
 
-    <a class="oval-nav-item @ActiveIf("Home", "About")" asp-area="" asp-controller="Home" asp-action="About">
-      <span class="oval-label">About</span>
-    </a>
+      <a class="oval-nav-item @ActiveIf("Home", "About")" asp-area="" asp-controller="Home" asp-action="About">
+        <i class="bi bi-info-circle oval-icon"></i>
+        <span class="oval-label">About</span>
+      </a>
 
-    <a class="oval-nav-item @ActiveIf("Cart", "Index")" asp-area="" asp-controller="Cart" asp-action="Index">
-      <span class="oval-label">Cart</span>
-    </a>
+      <a class="oval-nav-item @ActiveIf("Cart", "Index")" asp-area="" asp-controller="Cart" asp-action="Index">
+        <i class="bi bi-cart3 oval-icon"></i>
+        <span class="oval-label">Cart</span>
+      </a>
 
-    <a class="oval-nav-item @ActiveIf("Home", "Privacy")" asp-area="" asp-controller="Home" asp-action="Privacy">
-      <span class="oval-label">Profile</span>
-    </a>
+      <a class="oval-nav-item @ActiveIf("Home", "Privacy")" asp-area="" asp-controller="Home" asp-action="Privacy">
+        <i class="bi bi-person oval-icon"></i>
+        <span class="oval-label">Profile</span>
+      </a>
+    </div>
   </div>
 </nav>
