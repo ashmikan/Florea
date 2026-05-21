@@ -8,60 +8,103 @@
     @if (!Model.CartItems.Any())
     {
         <div class="cart-panel cart-empty">
-            <p class="text-muted">Your cart is empty.</p>
+            <i class="bi bi-cart-x text-muted mb-3" style="font-size: 3rem;"></i>
+            <h3 class="text-muted">Your cart is empty</h3>
+            <p class="text-muted mb-4">Looks like you haven't added any flowers yet.</p>
+            <a href="/Flowers" class="btn add-btn d-inline-flex" style="width: auto;">
+                <span class="btn-text">Start Shopping</span>
+            </a>
         </div>
     }
     else
     {
-        <div class="cart-panel">
-            <div class="table-responsive">
-                <table class="table align-middle">
-                <thead>
-                    <tr>
-                        <th>Flower</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Subtotal</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.CartItems)
-                    {
-                        <tr class="cart-item-row">
-                            <td>
-                                <div class="d-flex align-items-center gap-3">
-                                    <img src="@(string.IsNullOrEmpty(item.Flower.ImageUrl) ? "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&w=150&q=80" : item.Flower.ImageUrl)" alt="@item.Flower.Name" class="cart-item-image" />
-                                    <div>
-                                        <div class="cart-item-name">@item.Flower.Name</div>
-                                        <div class="cart-item-desc">@item.Flower.Description</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="price-cell">$@item.Flower.Price</td>
-                            <td>
-                                <div class="quantity-control">
-                                    <span class="qty-input bg-light border-0 fw-bold">@item.Quantity</span>
-                                </div>
-                            </td>
-                            <td class="subtotal-cell">$@(item.Flower.Price * item.Quantity)</td>
-                            <td>
-                                <form asp-controller="Cart" asp-action="Remove" method="post">
-                                    <input type="hidden" name="flowerId" value="@item.Flower.Id" />
-                                    <button type="submit" class="btn btn-outline-danger btn-sm">Remove</button>
-                                </form>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th colspan="3" class="text-end">Total</th>
-                        <th colspan="2">$@Model.CartItems.Sum(item => item.Flower.Price * item.Quantity)</th>
-                    </tr>
-                </tfoot>
-            </table>
+        <div class="row g-4">
+            <!-- Cart Items -->
+            <div class="col-lg-8">
+                <div class="cart-panel">
+                    <div class="table-responsive">
+                        <table class="table align-middle border-0 mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="border-0 text-muted fw-semibold">Flower</th>
+                                    <th class="border-0 text-muted fw-semibold">Price</th>
+                                    <th class="border-0 text-muted fw-semibold">Quantity</th>
+                                    <th class="border-0 text-muted fw-semibold">Subtotal</th>
+                                    <th class="border-0"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.CartItems)
+                                {
+                                    <tr class="cart-item-row border-bottom">
+                                        <td class="py-3 border-0 border-bottom">
+                                            <div class="d-flex align-items-center gap-3">
+                                                <img src="@(string.IsNullOrEmpty(item.Flower.ImageUrl) ? "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&w=150&q=80" : item.Flower.ImageUrl)" alt="@item.Flower.Name" class="cart-item-image" />
+                                                <div>
+                                                    <div class="cart-item-name fs-5">@item.Flower.Name</div>
+                                                    @if (!string.IsNullOrEmpty(item.Flower.Category))
+                                                    {
+                                                        <span class="badge badge-subtle mt-1">@item.Flower.Category</span>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="price-cell py-3 border-0 border-bottom">
+                                            $@item.Flower.Price.ToString("F2")
+                                        </td>
+                                        <td class="py-3 border-0 border-bottom">
+                                            <div class="quantity-control d-flex align-items-center bg-light rounded-pill px-3 py-1 d-inline-flex">
+                                                <span class="fw-bold">@item.Quantity</span>
+                                            </div>
+                                        </td>
+                                        <td class="subtotal-cell py-3 border-0 border-bottom text-primary">
+                                            $@((item.Flower.Price * item.Quantity).ToString("F2"))
+                                        </td>
+                                        <td class="py-3 border-0 border-bottom text-end">
+                                            <form asp-controller="Cart" asp-action="Remove" method="post" class="d-inline">
+                                                <input type="hidden" name="flowerId" value="@item.Flower.Id" />
+                                                <button type="submit" class="btn btn-link text-danger p-0" title="Remove item">
+                                                    <i class="bi bi-trash fs-5"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="col-lg-4">
+                <div class="cart-summary-wrapper">
+                    <div class="cart-summary p-4">
+                        <h4 class="mb-4 fw-bold">Order Summary</h4>
+                        
+                        <div class="d-flex justify-content-between mb-3 text-muted">
+                            <span>Subtotal</span>
+                            <span>$@Model.CartItems.Sum(item => item.Flower.Price * item.Quantity).ToString("F2")</span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mb-3 text-muted">
+                            <span>Shipping</span>
+                            <span>Calculated at checkout</span>
+                        </div>
+                        
+                        <hr class="my-4 border-light">
+                        
+                        <div class="d-flex justify-content-between mb-4 fs-4 fw-bold">
+                            <span>Total</span>
+                            <span>$@Model.CartItems.Sum(item => item.Flower.Price * item.Quantity).ToString("F2")</span>
+                        </div>
+                        
+                        <button class="btn add-btn w-100 py-3 fs-5">
+                            <span class="btn-text">Proceed to Checkout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
     }
 </div>
