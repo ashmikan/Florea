@@ -1,0 +1,44 @@
+## Ignore Visual Studio temporary files, build results, and
+## user-specific files
+
+# Build directories
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+npm-debug.log
+
+# Logs
+*.log
+
+# Local DBs
+*.db
+*.sqlite
+
+# Temporary files
+*~
+*.tmp
+
+# Ignore published output
+publish/
+
+# Ignore Rider caches
+.idea/
+
+# Ignore JetBrains Rider workspace files
+*.sln.iml
