@@ -1,0 +1,138 @@
+@{
+    ViewData["Title"] = "Your Profile";
+}
+
+<div class="container mt-5 profile-container">
+    <div class="row g-4">
+        <!-- Left Sidebar: User Summary -->
+        <div class="col-lg-4">
+            <div class="profile-card text-center">
+                <div class="profile-avatar-container position-relative mx-auto mb-3">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80" alt="User Avatar" class="profile-avatar" />
+                    <button id="avatarEditBtn" class="btn btn-primary rounded-circle position-absolute bottom-0 end-0 avatar-edit-btn" title="Edit Avatar" type="button">
+                        <i class="bi bi-camera"></i>
+                    </button>
+                </div>
+                <h3 class="fw-bold mb-1">Jane Doe</h3>
+                <p class="text-muted mb-4">Plant Enthusiast &middot; Member since 2026</p>
+                
+                <div class="d-grid gap-2">
+                    <button class="btn btn-outline-primary rounded-pill fw-bold">Edit Profile</button>
+                    <button class="btn btn-light rounded-pill text-danger fw-bold">Sign Out</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Content: Details & Tabs -->
+        <div class="col-lg-8">
+            <div class="profile-content">
+                <ul class="nav nav-pills profile-nav-pills mb-4" id="profileTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active rounded-pill" id="personal-tab" data-bs-toggle="pill" data-bs-target="#personal" type="button" role="tab">Personal Info</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link rounded-pill" id="orders-tab" data-bs-toggle="pill" data-bs-target="#orders" type="button" role="tab">Order History</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link rounded-pill" id="settings-tab" data-bs-toggle="pill" data-bs-target="#settings" type="button" role="tab">Settings</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="profileTabContent">
+                    <!-- Personal Info Tab -->
+                    <div class="tab-pane fade show active" id="personal" role="tabpanel" tabindex="0">
+                        <h4 class="fw-bold mb-4">Personal Information</h4>
+                        <form class="profile-form">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label text-muted small text-uppercase fw-bold">First Name</label>
+                                    <input type="text" class="form-control profile-input" value="Jane">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-muted small text-uppercase fw-bold">Last Name</label>
+                                    <input type="text" class="form-control profile-input" value="Doe">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label text-muted small text-uppercase fw-bold">Email Address</label>
+                                    <input type="email" class="form-control profile-input" value="jane.doe@example.com">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label text-muted small text-uppercase fw-bold">Phone Number</label>
+                                    <input type="tel" class="form-control profile-input" value="+1 (555) 123-4567">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label text-muted small text-uppercase fw-bold">Shipping Address</label>
+                                    <textarea class="form-control profile-input" rows="3">123 Botanical Garden Way&#10;Springfield, IL 62701</textarea>
+                                </div>
+                                <div class="col-12 mt-4 text-end">
+                                    <button id="saveProfileBtn" type="button" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm">Save Changes</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Orders Tab -->
+                    <div class="tab-pane fade" id="orders" role="tabpanel" tabindex="0">
+                        <h4 class="fw-bold mb-4">Recent Orders</h4>
+                        <div class="order-item p-3 mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-bold">Order #ORD-2026-001</span>
+                                <span class="badge bg-success rounded-pill px-3">Delivered</span>
+                            </div>
+                            <div class="text-muted small mb-2">Placed on May 15, 2026</div>
+                            <div class="d-flex align-items-center">
+                                <img src="https://images.unsplash.com/photo-1562690868-60bbe7293e94?auto=format&fit=crop&w=60&q=80" alt="Rose Bouquet" class="rounded me-3" style="width: 50px; height: 50px; object-fit: cover;">
+                                <div>
+                                    <div class="fw-semibold">Premium Rose Bouquet</div>
+                                    <div class="text-muted small">Qty: 1</div>
+                                </div>
+                                <div class="ms-auto fw-bold">$45.00</div>
+                            </div>
+                        </div>
+                        <div class="order-item p-3 mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-bold">Order #ORD-2026-002</span>
+                                <span class="badge bg-primary rounded-pill px-3">Processing</span>
+                            </div>
+                            <div class="text-muted small mb-2">Placed on May 21, 2026</div>
+                            <div class="d-flex align-items-center">
+                                <img src="https://images.unsplash.com/photo-1597055181300-e3623dd3f355?auto=format&fit=crop&w=60&q=80" alt="Orchid" class="rounded me-3" style="width: 50px; height: 50px; object-fit: cover;">
+                                <div>
+                                    <div class="fw-semibold">White Orchid Potted</div>
+                                    <div class="text-muted small">Qty: 2</div>
+                                </div>
+                                <div class="ms-auto fw-bold">$120.00</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings Tab -->
+                    <div class="tab-pane fade" id="settings" role="tabpanel" tabindex="0">
+                        <h4 class="fw-bold mb-4">Account Settings</h4>
+                        <div class="setting-item d-flex justify-content-between align-items-center p-3 mb-3">
+                            <div>
+                                <h6 class="mb-1 fw-bold">Email Notifications</h6>
+                                <p class="text-muted small mb-0">Receive updates about your orders and special offers.</p>
+                            </div>
+                            <div class="form-check form-switch fs-4">
+                                <input class="form-check-input custom-switch" type="checkbox" role="switch" checked>
+                            </div>
+                        </div>
+                        <div class="setting-item d-flex justify-content-between align-items-center p-3 mb-3">
+                            <div>
+                                <h6 class="mb-1 fw-bold">SMS Alerts</h6>
+                                <p class="text-muted small mb-0">Get text messages for delivery tracking.</p>
+                            </div>
+                            <div class="form-check form-switch fs-4">
+                                <input class="form-check-input custom-switch" type="checkbox" role="switch">
+                            </div>
+                        </div>
+                        <hr class="my-4">
+                        <h6 class="text-danger fw-bold mb-3">Danger Zone</h6>
+                        <button class="btn btn-outline-danger rounded-pill fw-bold">Delete Account</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
