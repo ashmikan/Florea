@@ -21,6 +21,12 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult Profile()
+    {
+        ViewData["BodyClass"] = "profile-page";
+        return View();
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
