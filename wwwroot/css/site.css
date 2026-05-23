@@ -471,6 +471,27 @@ body.home-page .btn-view-cart:focus {
   filter: brightness(1.1) drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15));
 }
 
+.navbar-logo-image {
+  display: block;
+  width: auto;
+  height: 35px;
+  max-width: 210px;
+  object-fit: contain;
+  transition: transform var(--transition-bounce), filter var(--transition-fast);
+}
+
+.navbar-logo-link:hover .navbar-logo-image {
+  transform: translateY(-1px) scale(1.03);
+  filter: saturate(1.05);
+}
+
+@media (max-width: 576px) {
+  .navbar-logo-image {
+    height: 46px;
+    max-width: 160px;
+  }
+}
+
 @media (max-width: 768px) {
   .oval-navbar {
     gap: 1rem;
@@ -876,6 +897,7 @@ body.about-page {
 
 .about-content h2 {
   background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 800;
@@ -911,6 +933,7 @@ body.about-page {
   font-size: 3rem;
   margin-bottom: 1.25rem;
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   transition: transform var(--transition-bounce);
