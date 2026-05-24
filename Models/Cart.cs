@@ -4,20 +4,20 @@ public class Cart
 {
     public List<CartItem> CartItems { get; set; } = new();
 
-    public void AddItem(Flower flower)
+    public void AddItem(Flower flower, int quantity = 1)
     {
         var existingItem = CartItems.FirstOrDefault(item => item.Flower.Id == flower.Id);
 
         if (existingItem is not null)
         {
-            existingItem.Quantity++;
+            existingItem.Quantity += quantity;
             return;
         }
 
         CartItems.Add(new CartItem
         {
             Flower = flower,
-            Quantity = 1
+            Quantity = quantity
         });
     }
 
