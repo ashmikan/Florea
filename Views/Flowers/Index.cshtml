@@ -761,8 +761,14 @@
     border-radius: 16px;
     padding: 0.9rem 1.5rem;
     font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 180px;
+    gap: 0.5rem;
+    min-height: 52px;
     box-shadow: 0 8px 25px rgba(227, 74, 111, 0.25);
-    transition: var(--transition-bounce);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal), filter var(--transition-normal);
     position: relative;
     overflow: hidden;
     color: white;
@@ -774,8 +780,17 @@
     filter: brightness(1.05);
 }
 
+#modalSubmitBtn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(227, 74, 111, 0.2), 0 12px 30px rgba(227, 74, 111, 0.35);
+}
+
 #modalSubmitBtn:active {
     transform: translateY(1px) scale(0.98);
+}
+
+#modalSubmitBtn .btn-text {
+    line-height: 1;
 }
 
 #modalSubmitBtn.adding .btn-text {
