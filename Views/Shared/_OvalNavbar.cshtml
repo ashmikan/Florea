@@ -1,3 +1,5 @@
+@using Floréa.Infrastructure
+@using Floréa.Models
 @* Oval-shaped navigation component *@
 @{
   var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
@@ -10,6 +12,9 @@
       ? "active"
       : string.Empty;
   }
+
+  var cart = Context.Session.GetObject<Cart>("Cart");
+  var cartCount = cart?.CartItems.Sum(item => item.Quantity) ?? 0;
 }
 
 <nav class="oval-navbar mt-3" role="navigation" aria-label="Primary oval navigation">
@@ -39,7 +44,10 @@
       </a>
 
       <a class="oval-nav-item @ActiveIf("Cart", "Index")" asp-area="" asp-controller="Cart" asp-action="Index">
-        <i class="bi bi-cart3 oval-icon"></i>
+        <div class="position-relative d-inline-flex align-items-center">
+          <i class="bi bi-cart3 oval-icon"></i>
+          <span class="cart-badge @(cartCount > 0 ? "" : "d-none")">@cartCount</span>
+        </div>
         <span class="oval-label">Cart</span>
       </a>
 
