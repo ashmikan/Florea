@@ -26,9 +26,12 @@
 
 @{
     var bodyClass = ViewData["BodyClass"] as string;
+    var hideSiteChrome = ViewData["HideSiteChrome"] as bool? ?? false;
+    var fullWidthPage = ViewData["FullWidthPage"] as bool? ?? false;
     var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
     var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
-    bool showLoginButton = string.Equals(currentController, "Home", System.StringComparison.OrdinalIgnoreCase)
+    bool showLoginButton = !hideSiteChrome
+        && string.Equals(currentController, "Home", System.StringComparison.OrdinalIgnoreCase)
         && string.Equals(currentAction, "Index", System.StringComparison.OrdinalIgnoreCase);
 }
 <body class="@bodyClass">
@@ -36,29 +39,42 @@
         <!-- Top header area (keep for semantic header content) -->
     </header>
 
-    @await Html.PartialAsync("_OvalNavbar")
-
-    @if (showLoginButton)
+    @if (!hideSiteChrome)
     {
-        <div class="top-right-oval" aria-hidden="false">
-            <a href="/Account/Login" class="oval-login-btn" role="button" title="Login">
-                <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>
-                <span>Login</span>
-            </a>
-        </div>
+        @await Html.PartialAsync("_OvalNavbar")
+
+        @if (showLoginButton)
+        {
+            <div class="top-right-oval" aria-hidden="false">
+                <a href="/Account/Login" class="oval-login-btn" role="button" title="Login">
+                    <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>
+                    <span>Login</span>
+                </a>
+            </div>
+        }
     }
 
-    <div class="container">
-        <main role="main" class="pb-3">
+    <main role="main" class="@(fullWidthPage ? "page-shell" : "pb-3")">
+        @if (fullWidthPage)
+        {
             @RenderBody()
-        </main>
-    </div>
+        }
+        else
+        {
+            <div class="container">
+                @RenderBody()
+            </div>
+        }
+    </main>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Floréa - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    @if (!hideSiteChrome)
+    {
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2026 - Floréa - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+    }
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

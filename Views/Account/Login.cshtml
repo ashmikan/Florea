@@ -1,0 +1,96 @@
+@model Floréa.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    ViewData["BodyClass"] = "login-page";
+    ViewData["HideSiteChrome"] = true;
+    ViewData["FullWidthPage"] = true;
+}
+
+<section class="login-page-shell">
+    <div class="login-visual-panel">
+        <div class="login-brand-badge">
+            <img src="~/images/florea-logo2.png" alt="Floréa" class="login-brand-logo" />
+            <span>Floréa Member Access</span>
+        </div>
+
+        <div class="login-visual-copy">
+            <p class="login-eyebrow">Fresh blooms. Faster checkout.</p>
+            <h1>Sign in to manage your flower orders with a softer experience.</h1>
+            <p class="login-lead">
+                Save your favorite arrangements, track deliveries, and pick up exactly where you left off.
+            </p>
+        </div>
+
+        <div class="login-feature-grid">
+            <article class="login-feature-card">
+                <span class="login-feature-icon"><i class="bi bi-heart-fill" aria-hidden="true"></i></span>
+                <strong>Curated favorites</strong>
+                <p>Keep the bouquets and plants you love close at hand.</p>
+            </article>
+
+            <article class="login-feature-card">
+                <span class="login-feature-icon"><i class="bi bi-truck" aria-hidden="true"></i></span>
+                <strong>Delivery tracking</strong>
+                <p>Check the status of every order from one calm dashboard.</p>
+            </article>
+        </div>
+
+        <div class="login-quote">
+            <p>"A polished login should feel like the first bouquet of the day: clean, warm, and effortless."</p>
+        </div>
+    </div>
+
+    <div class="login-form-panel">
+        <div class="login-form-card">
+            <div class="d-flex align-items-start justify-content-between gap-3 mb-4">
+                <div>
+                    <span class="login-form-kicker">Welcome back</span>
+                    <h2 class="login-form-title">Sign in</h2>
+                    <p class="login-form-subtitle mb-0">Use your email and password to continue.</p>
+                </div>
+                <a asp-controller="Home" asp-action="Index" class="login-close-link" aria-label="Return to home">
+                    <i class="bi bi-x-lg" aria-hidden="true"></i>
+                </a>
+            </div>
+
+            <form asp-action="Login" asp-controller="Account" method="post" class="login-form" novalidate>
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label login-label"></label>
+                    <input asp-for="Email" class="form-control login-input" placeholder="you@example.com" autocomplete="email" />
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center gap-3">
+                        <label asp-for="Password" class="form-label login-label mb-0"></label>
+                    </div>
+                    <input asp-for="Password" class="form-control login-input" placeholder="Enter your password" autocomplete="current-password" />
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+                <div class="login-remember-row">
+                    <div class="form-check">
+                        <input asp-for="RememberMe" class="form-check-input" />
+                        <label asp-for="RememberMe" class="form-check-label">Remember me</label>
+                    </div>
+
+                    <a href="#" class="login-forgot-link">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn login-submit-btn w-100">
+                    Sign in
+                </button>
+
+                <p class="login-secondary-action mb-0">
+                    New to Floréa?
+                    <a asp-controller="Flowers" asp-action="Index">Sign Up</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</section>
