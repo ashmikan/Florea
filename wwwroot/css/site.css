@@ -255,7 +255,7 @@ body.home-page .btn-view-cart:focus {
   padding: 0 1.5rem 1.5rem 1.5rem;
   background-image:
     linear-gradient(135deg, rgba(11, 29, 52, 0.82), rgba(58, 26, 33, 0.55)),
-    background-size: cover;
+    url('https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=1800&q=80');
   background-position: center;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
 }
@@ -1835,6 +1835,38 @@ body.tracking-page {
 }
 
 .tracking-action-btn {
+  min-width: 160px;
+}
+
+/* Stronger page-scoped rules to avoid being overridden by other stylesheets */
+.tracking-page .tracking-section-label {
+  color: var(--color-primary-dark);
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.tracking-page .tracking-item-list .tracking-item {
+  background: #fff;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  border-radius: 14px;
+  padding: 0.9rem 1rem;
+  align-items: center;
+}
+
+.tracking-page .tracking-item-list .tracking-item img {
+  width: 58px;
+  height: 58px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.tracking-page .tracking-address-card {
+  background: rgba(248, 250, 252, 0.95);
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  border-radius: 14px;
+}
+
+.tracking-page .tracking-actions .tracking-action-btn {
   min-width: 160px;
 }
 
