@@ -19,7 +19,7 @@
 
 <nav class="oval-navbar mt-3" role="navigation" aria-label="Primary oval navigation">
 
-  <div class="oval-nav container d-flex justify-content-between align-items-center mx-auto" style="max-width: 800px;">
+  <div class="oval-nav container d-flex justify-content-between align-items-center mx-auto" style="max-width: 960px;">
 
     <div class="navbar-logo-container me-auto">
       <a class="navbar-logo-link d-flex align-items-center gap-2 text-decoration-none" asp-area="" asp-controller="Home" asp-action="Index" title="Floréa Home">
@@ -54,6 +54,11 @@
       <a class="oval-nav-item @ActiveIf("Home", "Profile")" asp-area="" asp-controller="Home" asp-action="Profile">
         <i class="bi bi-person oval-icon"></i>
         <span class="oval-label">Profile</span>
+      </a>
+
+      <a class="oval-nav-item oval-nav-item--track @ActiveIf("Home", "DeliveryTracking")" asp-area="" asp-controller="Home" asp-action="DeliveryTracking">
+        <i class="bi bi-truck oval-icon"></i>
+        <span class="oval-label">Track</span>
       </a>
     </div>
   </div>
