@@ -27,6 +27,12 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult DeliveryTracking()
+    {
+        ViewData["BodyClass"] = "tracking-page";
+        return View();
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

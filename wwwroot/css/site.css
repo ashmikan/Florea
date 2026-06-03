@@ -255,7 +255,7 @@ body.home-page .btn-view-cart:focus {
   padding: 0 1.5rem 1.5rem 1.5rem;
   background-image:
     linear-gradient(135deg, rgba(11, 29, 52, 0.82), rgba(58, 26, 33, 0.55)),
-    url('https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=1800&q=80');
+
   background-position: center;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
 }
@@ -1590,6 +1590,7 @@ body.tracking-page {
   border-radius: 28px;
   box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
   backdrop-filter: blur(16px);
+  padding: 2rem;
 }
 
 .tracking-summary {
@@ -1868,6 +1869,22 @@ body.tracking-page {
 
 .tracking-page .tracking-actions .tracking-action-btn {
   min-width: 160px;
+}
+
+/* Make the primary tracking action (Call courier) a soft light-blue on the tracking page */
+.tracking-page .tracking-actions .btn.btn-primary.tracking-action-btn {
+  background: linear-gradient(90deg, #91e7ff 0%, #bfefff 100%);
+  color: #003a5a;
+  border: 1px solid rgba(3, 59, 86, 0.06);
+  box-shadow: 0 8px 20px rgba(6, 86, 128, 0.12);
+}
+
+.tracking-page .tracking-actions .btn.btn-primary.tracking-action-btn:hover,
+.tracking-page .tracking-actions .btn.btn-primary.tracking-action-btn:focus {
+  background: linear-gradient(90deg, #cceeff 0%, #a7e7ff 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(6, 86, 128, 0.16);
+  color: #001f33;
 }
 
 @media (max-width: 991px) {

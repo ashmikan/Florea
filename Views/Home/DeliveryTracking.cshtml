@@ -1,0 +1,180 @@
+@{
+    ViewData["Title"] = "Delivery Tracking";
+    ViewData["BodyClass"] = "tracking-page";
+}
+
+<section class="tracking-hero mt-3">
+
+    <div class="container position-relative z-1 py-4 py-lg-5">
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-10">
+                <div class="tracking-summary glass-panel">
+                    <div class="d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center">
+                        <div>
+                            <span class="tracking-kicker">
+                                <i class="bi bi-geo-alt-fill"></i> Live delivery updates
+                            </span>
+                            <h1 class="display-5 fw-bold mt-3 mb-2">Your bouquet is on the way</h1>
+                            <p class="text-muted mb-0 tracking-summary__copy">
+                                We’re carrying your arrangement across the city with fresh stems, careful packaging, and a direct route to your door.
+                            </p>
+                        </div>
+
+                        <div class="tracking-status-card">
+                            <span class="text-uppercase small fw-semibold text-muted">Estimated arrival</span>
+                            <div class="tracking-eta">12 min</div>
+                            <div class="tracking-status-pill">
+                                <i class="bi bi-lightning-charge-fill"></i>
+                                Out for delivery
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tracking-progress mt-4">
+                        <div class="tracking-step completed">
+                            <div class="tracking-step__dot"></div>
+                            <div>
+                                <div class="fw-bold">Order confirmed</div>
+                                <div class="text-muted small">May 2, 2026 · 2:14 PM</div>
+                            </div>
+                        </div>
+                        <div class="tracking-step completed">
+                            <div class="tracking-step__dot"></div>
+                            <div>
+                                <div class="fw-bold">Prepared by Floréa studio</div>
+                                <div class="text-muted small">Wrapped, chilled, and dispatched</div>
+                            </div>
+                        </div>
+                        <div class="tracking-step active">
+                            <div class="tracking-step__dot"></div>
+                            <div>
+                                <div class="fw-bold">On route to you</div>
+                                <div class="text-muted small">Courier is 2 stops away</div>
+                            </div>
+                        </div>
+                        <div class="tracking-step">
+                            <div class="tracking-step__dot"></div>
+                            <div>
+                                <div class="fw-bold">Delivered</div>
+                                <div class="text-muted small">We’ll confirm once it arrives</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 align-items-stretch">
+            <div class="col-xl-7">
+                <div class="glass-panel h-100 tracking-map-card">
+                    <div class="d-flex justify-content-between align-items-start gap-3 mb-4">
+                        <div>
+                            <p class="text-uppercase small fw-bold tracking-section-label mb-2">Delivery route</p>
+                            <h2 class="h3 fw-bold mb-2">Courier en route</h2>
+                            <p class="text-muted mb-0">Your driver is following the fastest path from the Floréa studio to your address.</p>
+                        </div>
+                        <div class="tracking-map-badge">
+                            <i class="bi bi-truck"></i>
+                            Route live
+                        </div>
+                    </div>
+
+                    <div class="tracking-map-surface">
+                        <div class="tracking-map-grid"></div>
+                        <div class="tracking-map-path"></div>
+                        <div class="tracking-map-marker tracking-map-marker--courier">
+                            <i class="bi bi-truck-front-fill"></i>
+                        </div>
+                        <div class="tracking-map-marker tracking-map-marker--destination">
+                            <i class="bi bi-house-heart-fill"></i>
+                        </div>
+
+                        <div class="tracking-map-card-float tracking-map-card-float--left">
+                            <span class="small text-muted text-uppercase fw-semibold">Courier</span>
+                            <div class="fw-bold">Maya R.</div>
+                            <div class="text-muted small">Vehicle 18 · Silver hatchback</div>
+                        </div>
+                        <div class="tracking-map-card-float tracking-map-card-float--right">
+                            <span class="small text-muted text-uppercase fw-semibold">ETA</span>
+                            <div class="fw-bold">12 min</div>
+                            <div class="text-muted small">Updated 1 min ago</div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mt-4 tracking-stat-row">
+                        <div class="col-sm-4">
+                            <div class="tracking-mini-stat">
+                                <span>Distance left</span>
+                                <strong>3.2 km</strong>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="tracking-mini-stat">
+                                <span>Current speed</span>
+                                <strong>28 km/h</strong>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="tracking-mini-stat">
+                                <span>Order ID</span>
+                                <strong>#FLO-4821</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-5">
+                <div class="glass-panel h-100 d-flex flex-column gap-4">
+                    <div>
+                        <p class="text-uppercase small fw-bold tracking-section-label mb-2">Order details</p>
+                        <h2 class="h4 fw-bold mb-3">What’s inside the box</h2>
+                        <div class="tracking-item-list">
+                            <div class="tracking-item">
+                                <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=300&q=80" alt="Roses" />
+                                <div>
+                                    <div class="fw-semibold">Romantic Rose Edit</div>
+                                    <div class="text-muted small">12 premium roses · gift wrap included</div>
+                                </div>
+                                <div class="fw-bold ms-auto">$25</div>
+                            </div>
+                            <div class="tracking-item">
+                                <img src="https://images.unsplash.com/photo-1526045478516-99145907023c?auto=format&fit=crop&w=300&q=80" alt="Greeting card" />
+                                <div>
+                                    <div class="fw-semibold">Handwritten note</div>
+                                    <div class="text-muted small">Printed on premium Floréa stationery</div>
+                                </div>
+                                <div class="fw-bold ms-auto">Included</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="text-uppercase small fw-bold tracking-section-label mb-2">Delivery address</p>
+                        <div class="tracking-address-card">
+                            <div class="d-flex align-items-start gap-3">
+                                <div class="tracking-address-icon">
+                                    <i class="bi bi-pin-map-fill"></i>
+                                </div>
+                                <div>
+                                    <div class="fw-bold">123 Botanical Garden Way</div>
+                                    <div class="text-muted small">Springfield, IL 62701</div>
+                                    <div class="text-muted small mt-2">Leave at the front desk if the door is locked.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tracking-actions mt-auto">
+                        <button class="btn btn-primary rounded-pill px-4 fw-semibold tracking-action-btn" type="button">
+                            <i class="bi bi-telephone-fill me-2"></i> Call courier
+                        </button>
+                        <button class="btn btn-outline-dark rounded-pill px-4 fw-semibold tracking-action-btn" type="button">
+                            <i class="bi bi-chat-dots-fill me-2"></i> Message support
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
