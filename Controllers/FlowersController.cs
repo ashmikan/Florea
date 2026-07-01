@@ -18,7 +18,7 @@ public class FlowersController : Controller
                 Description = "Romantic red roses",
                 Price = 25,
                 Category = "Roses",
-                ImageUrl = "https://images.unsplash.com/photo-1518895949257-7621c3c786d7"
+                ImageUrl = "/images/rose-bouquet.jpg"
             },
             new Flower
             {
@@ -27,7 +27,61 @@ public class FlowersController : Controller
                 Description = "Fresh tulips",
                 Price = 18,
                 Category = "Spring",
-                ImageUrl = "https://images.unsplash.com/photo-1520763185298-1b434c919102"
+                ImageUrl = "/images/tulips.jpg"
+            },
+            new Flower
+            {
+                Id = 3,
+                Name = "Sunflower Sunshine",
+                Description = "Bright sunflowers that add warmth to any room",
+                Price = 22,
+                Category = "Seasonal",
+                ImageUrl = "/images/sunflower-sunshine.jpg"
+            },
+            new Flower
+            {
+                Id = 4,
+                Name = "White Lily Arrangement",
+                Description = "Elegant lilies with a clean, graceful look",
+                Price = 28,
+                Category = "Lilies",
+                ImageUrl = "/images/white-lily-arrangement.jpg"
+            },
+            new Flower
+            {
+                Id = 5,
+                Name = "Peony Dream",
+                Description = "Soft and full peonies for a luxurious bouquet",
+                Price = 34,
+                Category = "Luxury",
+                ImageUrl = "/images/peony-dream.jpg"
+            },
+            new Flower
+            {
+                Id = 6,
+                Name = "Daisy Field Mix",
+                Description = "Cheerful daisies mixed with fresh greenery",
+                Price = 16,
+                Category = "Everyday",
+                ImageUrl = "/images/daisy-field-mix.jpg"
+            },
+            new Flower
+            {
+                Id = 7,
+                Name = "Orchid Elegance",
+                Description = "Refined orchids for a modern floral statement",
+                Price = 42,
+                Category = "Exotic",
+                ImageUrl = "/images/orchid-elegance.jpg"
+            },
+            new Flower
+            {
+                Id = 8,
+                Name = "Hydrangea Cloud",
+                Description = "Full hydrangea blooms with a soft pastel feel",
+                Price = 30,
+                Category = "Classic",
+                ImageUrl = "/images/hydrangea-cloud.jpg"
             }
         };
 
