@@ -1926,3 +1926,548 @@ body.tracking-page {
     transition: none !important;
   }
 }
+
+/* ==========================================================================
+   Flower Bouquet Customizer Styles
+   ========================================================================== */
+
+body.customize-page {
+  background:
+    radial-gradient(circle at 15% 18%, rgba(227, 74, 111, 0.12), transparent 30%),
+    linear-gradient(135deg, #fff8f6 0%, #fff3ef 52%, #fffaf7 100%);
+  min-height: 100vh;
+  padding-bottom: 4rem;
+}
+
+body.flowers-page {
+  background:
+    radial-gradient(circle at 16% 18%, rgba(245, 158, 11, 0.1), transparent 24%),
+    radial-gradient(circle at 84% 16%, rgba(227, 74, 111, 0.12), transparent 26%),
+    linear-gradient(135deg, #fffaf3 0%, #fff4f6 48%, #f8fbff 100%);
+  min-height: 100vh;
+  padding-bottom: 4rem;
+}
+
+body.privacy-page {
+  background:
+    radial-gradient(circle at 14% 18%, rgba(148, 163, 184, 0.12), transparent 26%),
+    radial-gradient(circle at 86% 78%, rgba(227, 74, 111, 0.08), transparent 24%),
+    linear-gradient(135deg, #ffffff 0%, #f8fafc 52%, #fff5f7 100%);
+  min-height: 100vh;
+  padding-bottom: 4rem;
+}
+
+.customize-container {
+  max-width: 1200px;
+}
+
+.preview-panel {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 28px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+}
+
+.bouquet-canvas-wrapper {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 12px;
+  border: 1px solid rgba(15, 23, 42, 0.04);
+}
+
+.bouquet-canvas {
+  position: relative;
+  height: 420px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #fcfaf7 0%, #f1ebe1 100%);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+/* Canvas Layers */
+.canvas-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 1. Wrapping Paper Styles */
+.wrapper-layer-kraft {
+  background: linear-gradient(135deg, #e7c7a0 0%, #c99f6b 100%);
+  clip-path: polygon(15% 100%, 0% 28%, 50% 60%, 100% 28%, 85% 100%);
+  z-index: 1;
+  opacity: 1;
+}
+
+.wrapper-layer-pink {
+  background: linear-gradient(135deg, #fbcfe8 0%, #f472b6 100%);
+  clip-path: polygon(15% 100%, 0% 28%, 50% 60%, 100% 28%, 85% 100%);
+  z-index: 1;
+  opacity: 1;
+}
+
+.wrapper-layer-burlap {
+  background: linear-gradient(135deg, #b58d53 0%, #876231 100%);
+  background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 2px, transparent 2px, transparent 8px),
+                    repeating-linear-gradient(-45deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 2px, transparent 2px, transparent 8px),
+                    linear-gradient(135deg, #c29d63 0%, #94713f 100%);
+  clip-path: polygon(15% 100%, 0% 28%, 50% 60%, 100% 28%, 85% 100%);
+  z-index: 1;
+  opacity: 1;
+}
+
+.wrapper-layer-vase {
+  background: rgba(224, 242, 254, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  clip-path: polygon(25% 100%, 20% 45%, 80% 45%, 75% 100%);
+  z-index: 4; /* Stays slightly in front of flowers */
+  opacity: 1;
+  border-radius: 0 0 32px 32px;
+}
+
+/* 2. Flowers Container Layer */
+.flowers-container-layer {
+  z-index: 3;
+}
+
+/* Adjust flower position when in vase to make them look inside the glass */
+.flowers-container-layer.in-vase {
+  z-index: 2; /* Put behind the glass container */
+}
+
+.flower-stem-visual {
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  font-size: 2.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  z-index: 3;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+}
+
+/* 3. Ribbon Bow Layer */
+.ribbon-bow {
+  position: absolute;
+  bottom: 27%;
+  left: 50%;
+  transform: translate(-50%, 50%) scale(0);
+  width: 32px;
+  height: 18px;
+  border-radius: 999px;
+  z-index: 10;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.ribbon-bow::before,
+.ribbon-bow::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 28px;
+  height: 24px;
+  border-radius: 50%;
+  border: 5px solid currentColor;
+  background: transparent;
+  pointer-events: none;
+}
+
+.ribbon-bow::before {
+  left: -20px;
+  transform: translateY(-50%) rotate(-15deg);
+}
+
+.ribbon-bow::after {
+  right: -20px;
+  transform: translateY(-50%) rotate(15deg);
+}
+
+/* Active ribbon styles */
+.ribbon-layer-red .ribbon-bow {
+  transform: translate(-50%, 50%) scale(1);
+  background: #ef4444;
+  color: #ef4444;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
+}
+
+.ribbon-layer-gold .ribbon-bow {
+  transform: translate(-50%, 50%) scale(1);
+  background: #f59e0b;
+  color: #f59e0b;
+  box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+}
+
+.ribbon-layer-green .ribbon-bow {
+  transform: translate(-50%, 50%) scale(1);
+  background: #10b981;
+  color: #10b981;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+}
+
+.ribbon-layer-blue .ribbon-bow {
+  transform: translate(-50%, 50%) scale(1);
+  background: #3b82f6;
+  color: #3b82f6;
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+}
+
+/* 4. Wrapping Shadow Overlay */
+.wrap-overlay-layer {
+  background: linear-gradient(to top, rgba(0,0,0,0.06) 0%, transparent 60%);
+  z-index: 5;
+}
+
+/* Greeting Card Preview styles */
+.card-preview-container {
+  background: white;
+  border-radius: 20px;
+}
+
+.greeting-card-paper {
+  background: #fffdf9;
+  border: 1px dashed #e2d2b8;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.01);
+  font-family: 'Outfit', sans-serif;
+  min-height: 110px;
+}
+
+.card-to {
+  color: #7c2d12;
+  font-size: 0.95rem;
+}
+
+.card-msg {
+  color: #451a03;
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* Options column styles */
+.options-panel {
+  background: white;
+  border-radius: 28px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.step-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(227, 74, 111, 0.1);
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* Wrapper option cards */
+.wrapper-option-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem;
+  border-radius: 16px;
+  border: 2px solid rgba(15, 23, 42, 0.06);
+  background: white;
+  cursor: pointer;
+  width: 100%;
+  transition: var(--transition-normal);
+}
+
+.wrapper-option-card:hover {
+  border-color: rgba(227, 74, 111, 0.3);
+  transform: translateY(-2px);
+  background: rgba(254, 242, 242, 0.2);
+}
+
+.wrapper-option-card.active {
+  border-color: var(--color-primary);
+  background: rgba(254, 242, 242, 0.4);
+  box-shadow: 0 6px 15px rgba(227, 74, 111, 0.08);
+}
+
+.wrapper-swatch {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.wrapper-kraft {
+  background: linear-gradient(135deg, #e7c7a0 0%, #c99f6b 100%);
+}
+
+.wrapper-pink {
+  background: linear-gradient(135deg, #fbcfe8 0%, #f472b6 100%);
+}
+
+.wrapper-burlap {
+  background: linear-gradient(135deg, #c29d63 0%, #94713f 100%);
+  background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 2px, transparent 2px, transparent 8px),
+                    linear-gradient(135deg, #c29d63 0%, #94713f 100%);
+}
+
+.wrapper-vase {
+  background: #e0f2fe;
+  border: 2px solid #bae6fd;
+}
+
+.option-details {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.option-price {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Flowers grid customization */
+.flowers-custom-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 0.85rem;
+}
+
+@media (min-width: 480px) {
+  .flowers-custom-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.flower-selector-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 16px;
+  border: 1px solid rgba(15, 23, 42, 0.05);
+  background: rgba(15, 23, 42, 0.01);
+  transition: var(--transition-fast);
+}
+
+.flower-selector-card:hover {
+  background: rgba(15, 23, 42, 0.03);
+}
+
+.selector-flower-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.03);
+}
+
+.bg-rose { background: #ffe4e6; }
+.bg-tulip { background: #fce7f3; }
+.bg-sunflower { background: #fef9c3; }
+.bg-lily { background: #fef9c3; }
+.bg-peony { background: #ffe4e6; }
+.bg-daisy { background: #f8fafc; }
+.bg-orchid { background: #f3e8ff; }
+.bg-hydrangea { background: #dbeafe; }
+.bg-breath { background: #f1f5f9; }
+
+.flower-meta {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  line-height: 1.2;
+}
+
+.flower-title {
+  font-size: 0.9rem;
+}
+
+.flower-cost {
+  font-size: 0.75rem;
+}
+
+.stem-picker {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 10px;
+  padding: 2px;
+}
+
+.stem-btn {
+  border: none;
+  background: transparent;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-dark);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.stem-btn:hover {
+  background: rgba(15, 23, 42, 0.05);
+  color: var(--color-primary);
+}
+
+.stem-qty {
+  width: 22px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+/* Ribbon bow color choices */
+.ribbon-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.ribbon-chip-card {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  border: 2px solid rgba(15, 23, 42, 0.06);
+  background: white;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: var(--transition-normal);
+}
+
+.ribbon-chip-card:hover {
+  border-color: rgba(227, 74, 111, 0.3);
+  transform: translateY(-1px);
+}
+
+.ribbon-chip-card.active {
+  border-color: var(--color-primary);
+  background: rgba(254, 242, 242, 0.4);
+}
+
+.ribbon-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.ribbon-dot-none {
+  background: #cbd5e1;
+  border: 1px solid #94a3b8;
+}
+
+.ribbon-dot-red { background: #ef4444; }
+.ribbon-dot-gold { background: #f59e0b; }
+.ribbon-dot-green { background: #10b981; }
+.ribbon-dot-blue { background: #3b82f6; }
+
+.rounded-12 {
+  border-radius: 12px !important;
+}
+
+.rounded-16 {
+  border-radius: 16px !important;
+}
+
+/* Summary Box */
+.summary-panel {
+  background: #fdfaf7;
+  border-radius: 20px;
+  border: 1px solid rgba(139, 92, 246, 0.08);
+}
+
+.summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.summary-list div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fw-extrabold {
+  font-weight: 850;
+}
+
+/* Add Customized Bouquet Button Styles */
+#addToCartBtn {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 50%, var(--color-secondary) 100%);
+  border: none;
+  color: white;
+  box-shadow: 0 8px 30px rgba(227, 74, 111, 0.35);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+#addToCartBtn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(227, 74, 111, 0.45);
+  filter: brightness(1.05);
+}
+
+#addToCartBtn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 4px 10px rgba(227, 74, 111, 0.2);
+}
+
+/* Loading State */
+#addToCartBtn.adding {
+  background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%) !important;
+  box-shadow: none !important;
+  cursor: not-allowed;
+  pointer-events: none;
+  animation: buttonPulse 1.5s infinite ease-in-out;
+}
+
+/* Success State */
+#addToCartBtn.added {
+  background: #10b981 !important;
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4) !important;
+  pointer-events: none;
+  animation: buttonPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Keyframes for Button Interactions */
+@keyframes buttonPulse {
+  0% { opacity: 0.8; }
+  50% { opacity: 0.5; }
+  100% { opacity: 0.8; }
+}
+
+@keyframes buttonPop {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}

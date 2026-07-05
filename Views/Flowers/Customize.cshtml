@@ -1,0 +1,733 @@
+@model dynamic
+@{
+    ViewData["Title"] = "Customize Your Bouquet";
+    ViewData["BodyClass"] = "customize-page";
+}
+
+<div class="container customize-container py-4">
+    <div class="customize-header text-center mb-5">
+        <span class="badge rounded-pill bg-light text-primary border border-primary border-opacity-25 px-3 py-2 mb-2">
+            <i class="bi bi-magic me-1"></i> Artisan Creator
+        </span>
+        <h1 class="display-4 fw-bold">Design Your Bouquet</h1>
+        <p class="lead text-muted">Hand-pick your wrapper, ribbons, and flowers. We will build it fresh to order.</p>
+    </div>
+
+    <div class="row g-5">
+        <!-- Visual Preview Column -->
+        <div class="col-lg-6">
+            <div class="preview-panel sticky-lg-top" style="top: 100px;">
+                <h3 class="fw-bold mb-4 h4 d-flex justify-content-between align-items-center">
+                    <span>Live Preview</span>
+                    <button type="button" id="resetBuilder" class="btn btn-sm btn-outline-secondary rounded-pill">
+                        <i class="bi bi-arrow-counterclockwise"></i> Reset
+                    </button>
+                </h3>
+                
+                <div class="bouquet-canvas-wrapper shadow-lg mb-4">
+                    <div id="bouquetCanvas" class="bouquet-canvas">
+                        <!-- Wrapping Paper Background Layer -->
+                        <div id="wrapperLayer" class="canvas-layer wrapper-layer-kraft"></div>
+                        
+                        <!-- Flowers Container Layer -->
+                        <div id="flowersLayer" class="canvas-layer flowers-container-layer">
+                            <div class="flowers-grid-helper"></div>
+                            <!-- Dynamically added flowers will spawn here -->
+                        </div>
+                        
+                        <!-- Ribbon Layer -->
+                        <div id="ribbonLayer" class="canvas-layer ribbon-layer-none">
+                            <div class="ribbon-bow"></div>
+                        </div>
+                        
+                        <!-- Front Wrap Shading Overlay (adds depth) -->
+                        <div class="canvas-layer wrap-overlay-layer"></div>
+                    </div>
+                </div>
+
+                <!-- Greeting Card Preview Panel -->
+                <div class="card-preview-container shadow-sm p-4 border border-light">
+                    <div class="card-preview-header d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-uppercase text-muted small fw-semibold tracking-wider">Greeting Note Preview</span>
+                        <i class="bi bi-envelope text-primary"></i>
+                    </div>
+                    <div class="greeting-card-paper">
+                        <div class="card-to fw-bold" id="cardPreviewTo">To: Friend</div>
+                        <div class="card-msg mt-2 italic" id="cardPreviewMsg">Your custom note will appear here...</div>
+                        <div class="card-from text-end mt-3 text-muted small" id="cardPreviewFrom">- With Love</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Selection Options Column -->
+        <div class="col-lg-6">
+            <div class="options-panel p-4">
+                <form id="customBouquetForm" action="/Cart/AddCustom" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <!-- Step 1: Wrapper -->
+                    <div class="option-section mb-5">
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="step-badge me-3">1</span>
+                            <h3 class="h5 fw-bold mb-0">Select Wrapping Paper</h3>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <label class="wrapper-option-card active" data-wrapper="Kraft Paper" data-price="3.00">
+                                    <input type="radio" name="Wrapper" value="Kraft Paper" checked class="d-none">
+                                    <div class="wrapper-swatch wrapper-kraft"></div>
+                                    <div class="option-details">
+                                        <span class="option-name fw-bold">Kraft Paper</span>
+                                        <span class="option-price text-primary">+$3.00</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="wrapper-option-card" data-wrapper="Pink Paper" data-price="4.00">
+                                    <input type="radio" name="Wrapper" value="Pink Paper" class="d-none">
+                                    <div class="wrapper-swatch wrapper-pink"></div>
+                                    <div class="option-details">
+                                        <span class="option-name fw-bold">Elegant Pink</span>
+                                        <span class="option-price text-primary">+$4.00</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="wrapper-option-card" data-wrapper="Burlap" data-price="5.00">
+                                    <input type="radio" name="Wrapper" value="Burlap" class="d-none">
+                                    <div class="wrapper-swatch wrapper-burlap"></div>
+                                    <div class="option-details">
+                                        <span class="option-name fw-bold">Rustic Burlap</span>
+                                        <span class="option-price text-primary">+$5.00</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="wrapper-option-card" data-wrapper="Glass Vase" data-price="8.00">
+                                    <input type="radio" name="Wrapper" value="Glass Vase" class="d-none">
+                                    <div class="wrapper-swatch wrapper-vase"></div>
+                                    <div class="option-details">
+                                        <span class="option-name fw-bold">Glass Vase</span>
+                                        <span class="option-price text-primary">+$8.00</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Choose Stems -->
+                    <div class="option-section mb-5">
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="step-badge me-3">2</span>
+                            <h3 class="h5 fw-bold mb-0">Add Flower Stems</h3>
+                        </div>
+                        <p class="text-muted small mb-4">Click plus/minus buttons to add stems to your bouquet. Stems will be visualized in the live preview!</p>
+
+                        <div class="flowers-custom-grid">
+                            <!-- Rose -->
+                            <div class="flower-selector-card" data-name="Rose" data-price="2.50" data-color="#f43f5e">
+                                <div class="selector-flower-icon bg-rose">🌹</div>
+                                <div class="flower-meta">
+                                    <span class="flower-title fw-bold">Rose</span>
+                                    <span class="flower-cost text-muted">$2.50 / stem</span>
+                                </div>
+                                <div class="stem-picker">
+                                    <button type="button" class="stem-btn stem-minus"><i class="bi bi-dash"></i></button>
+                                    <span class="stem-qty">0</span>
+                                    <button type="button" class="stem-btn stem-plus"><i class="bi bi-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Tulip -->
+                            <div class="flower-selector-card" data-name="Tulip" data-price="2.00" data-color="#f472b6">
+                                <div class="selector-flower-icon bg-tulip">🌷</div>
+                                <div class="flower-meta">
+                                    <span class="flower-title fw-bold">Tulip</span>
+                                    <span class="flower-cost text-muted">$2.00 / stem</span>
+                                </div>
+                                <div class="stem-picker">
+                                    <button type="button" class="stem-btn stem-minus"><i class="bi bi-dash"></i></button>
+                                    <span class="stem-qty">0</span>
+                                    <button type="button" class="stem-btn stem-plus"><i class="bi bi-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Sunflower -->
+                            <div class="flower-selector-card" data-name="Sunflower" data-price="3.00" data-color="#eab308">
+                                <div class="selector-flower-icon bg-sunflower">🌻</div>
+                                <div class="flower-meta">
+                                    <span class="flower-title fw-bold">Sunflower</span>
+                                    <span class="flower-cost text-muted">$3.00 / stem</span>
+                                </div>
+                                <div class="stem-picker">
+                                    <button type="button" class="stem-btn stem-minus"><i class="bi bi-dash"></i></button>
+                                    <span class="stem-qty">0</span>
+                                    <button type="button" class="stem-btn stem-plus"><i class="bi bi-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Lily -->
+                            <div class="flower-selector-card" data-name="Lily" data-price="3.50" data-color="#fef08a">
+                                <div class="selector-flower-icon bg-lily">🌸</div>
+                                <div class="flower-meta">
+                                    <span class="flower-title fw-bold">White Lily</span>
+                                    <span class="flower-cost text-muted">$3.50 / stem</span>
+                                </div>
+                                <div class="stem-picker">
+                                    <button type="button" class="stem-btn stem-minus"><i class="bi bi-dash"></i></button>
+                                    <span class="stem-qty">0</span>
+                                    <button type="button" class="stem-btn stem-plus"><i class="bi bi-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Peony -->
+                            <div class="flower-selector-card" data-name="Peony" data-price="4.00" data-color="#fb7185">
+                                <div class="selector-flower-icon bg-peony">🌺</div>
+                                <div class="flower-meta">
+                                    <span class="flower-title fw-bold">Peony</span>
+                                    <span class="flower-cost text-muted">$4.00 / stem</span>
+                                </div>
+                                <div class="stem-picker">
+                                    <button type="button" class="stem-btn stem-minus"><i class="bi bi-dash"></i></button>
+                                    <span class="stem-qty">0</span>
+                                    <button type="button" class="stem-btn stem-plus"><i class="bi bi-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Daisy -->
+                            <div class="flower-selector-card" data-name="Daisy" data-price="1.50" data-color="#ffffff">
+                                <div class="selector-flower-icon bg-daisy">🌼</div>
+                                <div class="flower-meta">
+                                    <span class="flower-title fw-bold">Daisy</span>
+                                    <span class="flower-cost text-muted">$1.50 / stem</span>
+                                </div>
+                                <div class="stem-picker">
+                                    <button type="button" class="stem-btn stem-minus"><i class="bi bi-dash"></i></button>
+                                    <span class="stem-qty">0</span>
+                                    <button type="button" class="stem-btn stem-plus"><i class="bi bi-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Orchid -->
+                            <div class="flower-selector-card" data-name="Orchid" data-price="5.00" data-color="#c084fc">
+                                <div class="selector-flower-icon bg-orchid">🔮</div>
+                                <div class="flower-meta">
+                                    <span class="flower-title fw-bold">Orchid</span>
+                                    <span class="flower-cost text-muted">$5.00 / stem</span>
+                                </div>
+                                <div class="stem-picker">
+                                    <button type="button" class="stem-btn stem-minus"><i class="bi bi-dash"></i></button>
+                                    <span class="stem-qty">0</span>
+                                    <button type="button" class="stem-btn stem-plus"><i class="bi bi-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Hydrangea -->
+                            <div class="flower-selector-card" data-name="Hydrangea" data-price="3.00" data-color="#60a5fa">
+                                <div class="selector-flower-icon bg-hydrangea">☁️</div>
+                                <div class="flower-meta">
+                                    <span class="flower-title fw-bold">Hydrangea</span>
+                                    <span class="flower-cost text-muted">$3.00 / stem</span>
+                                </div>
+                                <div class="stem-picker">
+                                    <button type="button" class="stem-btn stem-minus"><i class="bi bi-dash"></i></button>
+                                    <span class="stem-qty">0</span>
+                                    <button type="button" class="stem-btn stem-plus"><i class="bi bi-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Baby's Breath -->
+                            <div class="flower-selector-card" data-name="Baby's Breath" data-price="1.00" data-color="#f1f5f9">
+                                <div class="selector-flower-icon bg-breath">🌿</div>
+                                <div class="flower-meta">
+                                    <span class="flower-title fw-bold">Baby's Breath</span>
+                                    <span class="flower-cost text-muted">$1.00 / stem</span>
+                                </div>
+                                <div class="stem-picker">
+                                    <button type="button" class="stem-btn stem-minus"><i class="bi bi-dash"></i></button>
+                                    <span class="stem-qty">0</span>
+                                    <button type="button" class="stem-btn stem-plus"><i class="bi bi-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Ribbon -->
+                    <div class="option-section mb-5">
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="step-badge me-3">3</span>
+                            <h3 class="h5 fw-bold mb-0">Ribbon Bow Color</h3>
+                        </div>
+                        <div class="ribbon-choices">
+                            <label class="ribbon-chip-card active" data-ribbon="None" data-price="0.00">
+                                <input type="radio" name="Ribbon" value="None" checked class="d-none">
+                                <span class="ribbon-dot ribbon-dot-none"></span>
+                                <span class="ribbon-label">No Ribbon</span>
+                            </label>
+                            <label class="ribbon-chip-card" data-ribbon="Satin Red" data-price="1.00">
+                                <input type="radio" name="Ribbon" value="Satin Red" class="d-none">
+                                <span class="ribbon-dot ribbon-dot-red"></span>
+                                <span class="ribbon-label">Satin Red (+$1)</span>
+                            </label>
+                            <label class="ribbon-chip-card" data-ribbon="Silk Gold" data-price="1.00">
+                                <input type="radio" name="Ribbon" value="Silk Gold" class="d-none">
+                                <span class="ribbon-dot ribbon-dot-gold"></span>
+                                <span class="ribbon-label">Silk Gold (+$1)</span>
+                            </label>
+                            <label class="ribbon-chip-card" data-ribbon="Olive Green" data-price="1.00">
+                                <input type="radio" name="Ribbon" value="Olive Green" class="d-none">
+                                <span class="ribbon-dot ribbon-dot-green"></span>
+                                <span class="ribbon-label">Olive Green (+$1)</span>
+                            </label>
+                            <label class="ribbon-chip-card" data-ribbon="Sky Blue" data-price="1.00">
+                                <input type="radio" name="Ribbon" value="Sky Blue" class="d-none">
+                                <span class="ribbon-dot ribbon-dot-blue"></span>
+                                <span class="ribbon-label">Sky Blue (+$1)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Card message -->
+                    <div class="option-section mb-5">
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="step-badge me-3">4</span>
+                            <h3 class="h5 fw-bold mb-0">Personalized Note</h3>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="recipientInput" class="form-label small fw-semibold text-muted">Recipient Name</label>
+                                    <input type="text" id="recipientInput" name="NoteRecipient" class="form-control rounded-12" placeholder="Dear Friend">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="noteInput" class="form-label small fw-semibold text-muted">Greeting Message</label>
+                                    <textarea id="noteInput" name="Note" class="form-control rounded-12" rows="3" placeholder="Write your heartfelt note..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Checkout Summary Panel -->
+                    <div class="summary-panel p-4 shadow-sm">
+                        <h4 class="fw-bold mb-3">Bouquet Summary</h4>
+                        <div class="summary-list text-muted small mb-4" id="summaryList">
+                            <div><i class="bi bi-circle-fill text-primary" style="font-size: 6px;"></i> Kraft Paper wrapping</div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <span class="fw-bold text-uppercase small text-muted">Estimated Total</span>
+                            <span class="display-6 fw-extrabold text-primary" id="totalPriceDisplay">$3.00</span>
+                        </div>
+
+                        <button type="submit" id="addToCartBtn" class="btn btn-primary btn-lg w-100 py-3 rounded-16 fw-bold">
+                            <span class="btn-text">Add Customized Bouquet</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Current customization state
+    const state = {
+        wrapper: 'Kraft Paper',
+        wrapperPrice: 3.00,
+        ribbon: 'None',
+        ribbonPrice: 0.00,
+        flowers: {
+            'Rose': { qty: 0, price: 2.50, color: '#f43f5e', icon: '🌹' },
+            'Tulip': { qty: 0, price: 2.00, color: '#f472b6', icon: '🌷' },
+            'Sunflower': { qty: 0, price: 3.00, color: '#eab308', icon: '🌻' },
+            'Lily': { qty: 0, price: 3.50, color: '#fef08a', icon: '🌸' },
+            'Peony': { qty: 0, price: 4.00, color: '#fb7185', icon: '🌺' },
+            'Daisy': { qty: 0, price: 1.50, color: '#ffffff', icon: '🌼' },
+            'Orchid': { qty: 0, price: 5.00, color: '#c084fc', icon: '🔮' },
+            'Hydrangea': { qty: 0, price: 3.00, color: '#60a5fa', icon: '☁️' },
+            'Baby\'s Breath': { qty: 0, price: 1.00, color: '#f1f5f9', icon: '🌿' }
+        },
+        noteRecipient: '',
+        note: ''
+    };
+
+    // DOM Elements
+    const wrapperOptions = document.querySelectorAll('.wrapper-option-card');
+    const ribbonOptions = document.querySelectorAll('.ribbon-chip-card');
+    const wrapperLayer = document.getElementById('wrapperLayer');
+    const ribbonLayer = document.getElementById('ribbonLayer');
+    const flowersLayer = document.getElementById('flowersLayer');
+    
+    const recipientInput = document.getElementById('recipientInput');
+    const noteInput = document.getElementById('noteInput');
+    const cardPreviewTo = document.getElementById('cardPreviewTo');
+    const cardPreviewMsg = document.getElementById('cardPreviewMsg');
+    
+    const totalPriceDisplay = document.getElementById('totalPriceDisplay');
+    const summaryList = document.getElementById('summaryList');
+    const customBouquetForm = document.getElementById('customBouquetForm');
+    const addToCartBtn = document.getElementById('addToCartBtn');
+    const resetBuilderBtn = document.getElementById('resetBuilder');
+
+    // 1. Handle Wrapper selections
+    wrapperOptions.forEach(card => {
+        card.addEventListener('click', function() {
+            wrapperOptions.forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+            
+            const radio = this.querySelector('input[type="radio"]');
+            radio.checked = true;
+            
+            state.wrapper = this.dataset.wrapper;
+            state.wrapperPrice = parseFloat(this.dataset.price);
+            
+            // Update wrapper layer CSS class
+            wrapperLayer.className = 'canvas-layer';
+            if (state.wrapper === 'Kraft Paper') wrapperLayer.classList.add('wrapper-layer-kraft');
+            else if (state.wrapper === 'Pink Paper') wrapperLayer.classList.add('wrapper-layer-pink');
+            else if (state.wrapper === 'Burlap') wrapperLayer.classList.add('wrapper-layer-burlap');
+            else if (state.wrapper === 'Glass Vase') wrapperLayer.classList.add('wrapper-layer-vase');
+            
+            // Adjust flowers layer container position based on wrapping
+            if (state.wrapper === 'Glass Vase') {
+                flowersLayer.classList.add('in-vase');
+            } else {
+                flowersLayer.classList.remove('in-vase');
+            }
+
+            calculateTotals();
+        });
+    });
+
+    // 2. Handle Ribbon selections
+    ribbonOptions.forEach(card => {
+        card.addEventListener('click', function() {
+            ribbonOptions.forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+            
+            const radio = this.querySelector('input[type="radio"]');
+            radio.checked = true;
+            
+            state.ribbon = this.dataset.ribbon;
+            state.ribbonPrice = parseFloat(this.dataset.price);
+
+            // Update ribbon layer CSS class
+            ribbonLayer.className = 'canvas-layer';
+            if (state.ribbon === 'None') ribbonLayer.classList.add('ribbon-layer-none');
+            else if (state.ribbon === 'Satin Red') ribbonLayer.classList.add('ribbon-layer-red');
+            else if (state.ribbon === 'Silk Gold') ribbonLayer.classList.add('ribbon-layer-gold');
+            else if (state.ribbon === 'Olive Green') ribbonLayer.classList.add('ribbon-layer-green');
+            else if (state.ribbon === 'Sky Blue') ribbonLayer.classList.add('ribbon-layer-blue');
+
+            calculateTotals();
+        });
+    });
+
+    // 3. Handle Flowers picking
+    document.querySelectorAll('.flower-selector-card').forEach(card => {
+        const name = card.dataset.name;
+        const qtySpan = card.querySelector('.stem-qty');
+        const plusBtn = card.querySelector('.stem-plus');
+        const minusBtn = card.querySelector('.stem-minus');
+
+        plusBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            let qty = state.flowers[name].qty;
+            if (qty < 15) {
+                qty++;
+                state.flowers[name].qty = qty;
+                qtySpan.textContent = qty;
+                addFlowerVisual(name);
+                calculateTotals();
+            }
+        });
+
+        minusBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            let qty = state.flowers[name].qty;
+            if (qty > 0) {
+                qty--;
+                state.flowers[name].qty = qty;
+                qtySpan.textContent = qty;
+                removeFlowerVisual(name);
+                calculateTotals();
+            }
+        });
+    });
+
+    // Spawns a flower element into the preview canvas
+    function addFlowerVisual(name) {
+        const flower = state.flowers[name];
+        const el = document.createElement('div');
+        el.className = `flower-stem-visual f-${name.replace(/\s+/g, '-').toLowerCase()}`;
+        el.dataset.flowerName = name;
+        el.innerHTML = flower.icon;
+
+        // Generate randomized coordinates inside the bouquet bundle zone
+        // Bundled range is roughly centered (circle with radius R)
+        const isVase = state.wrapper === 'Glass Vase';
+        const rangeX = isVase ? { min: 25, max: 75 } : { min: 20, max: 80 };
+        const rangeY = isVase ? { min: 10, max: 55 } : { min: 15, max: 65 };
+
+        const posX = Math.random() * (rangeX.max - rangeX.min) + rangeX.min;
+        const posY = Math.random() * (rangeY.max - rangeY.min) + rangeY.min;
+        const rotate = Math.random() * 60 - 30; // -30deg to 30deg
+        const scale = Math.random() * 0.2 + 0.9; // 0.9 to 1.1
+
+        el.style.left = `${posX}%`;
+        el.style.top = `${posY}%`;
+        el.style.transform = `translate(-50%, -50%) scale(0) rotate(${rotate}deg)`;
+        el.style.opacity = '0';
+        
+        flowersLayer.appendChild(el);
+        
+        // Trigger bounce scale in
+        setTimeout(() => {
+            el.style.transform = `translate(-50%, -50%) scale(${scale}) rotate(${rotate}deg)`;
+            el.style.opacity = '1';
+        }, 30);
+    }
+
+    // Removes one visual flower element from the canvas
+    function removeFlowerVisual(name) {
+        const selector = `.flower-stem-visual[data-flower-name="${name}"]`;
+        const elements = flowersLayer.querySelectorAll(selector);
+        if (elements.length > 0) {
+            const last = elements[elements.length - 1];
+            // Shrink out and remove
+            last.style.transform += ' scale(0)';
+            last.style.opacity = '0';
+            setTimeout(() => {
+                last.remove();
+            }, 300);
+        }
+    }
+
+    // 4. Handle Greeting Note
+    recipientInput.addEventListener('input', function() {
+        state.noteRecipient = this.value.trim();
+        cardPreviewTo.textContent = `To: ${state.noteRecipient || 'Friend'}`;
+    });
+
+    noteInput.addEventListener('input', function() {
+        state.note = this.value.trim();
+        cardPreviewMsg.textContent = state.note || 'Your custom note will appear here...';
+    });
+
+    // Calculates and displays the total and custom recipe list
+    function calculateTotals() {
+        let total = state.wrapperPrice + state.ribbonPrice;
+        let stemsCount = 0;
+        
+        const summaryItems = [];
+        summaryItems.push(`<div><i class="bi bi-circle-fill text-primary" style="font-size: 6px;"></i> ${state.wrapper} wrapping</div>`);
+        if (state.ribbon !== 'None') {
+            summaryItems.push(`<div><i class="bi bi-circle-fill text-primary" style="font-size: 6px;"></i> ${state.ribbon} ribbon</div>`);
+        }
+
+        const flowersList = [];
+        for (const [name, f] of Object.entries(state.flowers)) {
+            if (f.qty > 0) {
+                total += f.qty * f.price;
+                stemsCount += f.qty;
+                flowersList.push(`${f.qty}x ${name}`);
+            }
+        }
+
+        if (flowersList.length > 0) {
+            summaryItems.push(`<div><i class="bi bi-circle-fill text-primary" style="font-size: 6px;"></i> Flowers: ${flowersList.join(', ')}</div>`);
+        }
+
+        if (state.note) {
+            summaryItems.push(`<div><i class="bi bi-circle-fill text-primary" style="font-size: 6px;"></i> Greeting card message included</div>`);
+        }
+
+        totalPriceDisplay.textContent = `$${total.toFixed(2)}`;
+        summaryList.innerHTML = summaryItems.join('');
+    }
+
+    // 5. Reset Builder
+    resetBuilderBtn.addEventListener('click', function() {
+        // Reset state
+        state.wrapper = 'Kraft Paper';
+        state.wrapperPrice = 3.00;
+        state.ribbon = 'None';
+        state.ribbonPrice = 0.00;
+        state.noteRecipient = '';
+        state.note = '';
+        
+        for (const f of Object.values(state.flowers)) {
+            f.qty = 0;
+        }
+
+        // Reset inputs
+        recipientInput.value = '';
+        noteInput.value = '';
+        cardPreviewTo.textContent = 'To: Friend';
+        cardPreviewMsg.textContent = 'Your custom note will appear here...';
+
+        document.querySelectorAll('.wrapper-option-card').forEach((c, idx) => {
+            if (idx === 0) {
+                c.classList.add('active');
+                c.querySelector('input').checked = true;
+            } else {
+                c.classList.remove('active');
+            }
+        });
+
+        document.querySelectorAll('.ribbon-chip-card').forEach((c, idx) => {
+            if (idx === 0) {
+                c.classList.add('active');
+                c.querySelector('input').checked = true;
+            } else {
+                c.classList.remove('active');
+            }
+        });
+
+        document.querySelectorAll('.stem-qty').forEach(s => s.textContent = '0');
+        flowersLayer.innerHTML = '<div class="flowers-grid-helper"></div>';
+        
+        wrapperLayer.className = 'canvas-layer wrapper-layer-kraft';
+        ribbonLayer.className = 'canvas-layer ribbon-layer-none';
+        flowersLayer.className = 'canvas-layer flowers-container-layer';
+
+        calculateTotals();
+    });
+
+    // 6. AJAX form post and custom toast trigger
+    customBouquetForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Make sure they added at least one flower!
+        let hasFlowers = false;
+        for (const f of Object.values(state.flowers)) {
+            if (f.qty > 0) {
+                hasFlowers = true;
+                break;
+            }
+        }
+
+        if (!hasFlowers) {
+            alert('Please add at least one flower to your custom bouquet before adding to the cart!');
+            return;
+        }
+
+        if (addToCartBtn.classList.contains('adding') || addToCartBtn.classList.contains('added')) return;
+
+        // Enter loading state
+        const btnText = addToCartBtn.querySelector('.btn-text');
+        addToCartBtn.classList.add('adding');
+        if (btnText) btnText.textContent = 'Adding Custom Bouquet...';
+
+        // Prepare FormData
+        const formData = new FormData();
+        
+        // Add anti-forgery token
+        const token = customBouquetForm.querySelector('input[name="__RequestVerificationToken"]').value;
+        formData.append('__RequestVerificationToken', token);
+        
+        // Append core states
+        formData.append('Wrapper', state.wrapper);
+        formData.append('Ribbon', state.ribbon);
+        formData.append('Note', state.note);
+        formData.append('NoteRecipient', state.noteRecipient);
+
+        // Serialize flowers list
+        let index = 0;
+        for (const [name, f] of Object.entries(state.flowers)) {
+            if (f.qty > 0) {
+                formData.append(`Flowers[${index}].Name`, name);
+                formData.append(`Flowers[${index}].Quantity`, f.qty);
+                index++;
+            }
+        }
+
+        // Post AJAX
+        fetch(customBouquetForm.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                // Success state
+                addToCartBtn.classList.remove('adding');
+                addToCartBtn.classList.add('added');
+                if (btnText) btnText.innerHTML = 'Added to Cart! <i class="bi bi-check2"></i>';
+
+                // Update Navbar cart badge counts
+                document.querySelectorAll('.cart-badge').forEach(badge => {
+                    badge.textContent = data.itemCount;
+                    badge.classList.remove('d-none');
+                    badge.style.animation = 'none';
+                    badge.offsetHeight; // trigger reflow
+                    badge.style.animation = '';
+                });
+
+                // Show Success Toast using the existing helper framework
+                if (window.parent && typeof showSuccessToast === 'function') {
+                    showSuccessToast('Custom Bouquet', '/images/custom-bouquet.png', 1);
+                } else {
+                    // Fallback local toast
+                    showLocalToast('Custom Bouquet', '/images/custom-bouquet.png');
+                }
+
+                // Reset state
+                setTimeout(() => {
+                    addToCartBtn.classList.remove('added');
+                    if (btnText) btnText.textContent = 'Add Customized Bouquet';
+                }, 2000);
+            }
+        })
+        .catch(err => {
+            console.error('Error adding custom bouquet:', err);
+            addToCartBtn.classList.remove('adding');
+            if (btnText) btnText.textContent = 'Add Customized Bouquet';
+        });
+    });
+
+    // Local Toast Fallback if external helper is not globally exposed
+    function showLocalToast(name, imageUrl) {
+        let toast = document.querySelector('.florea-toast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.className = 'florea-toast';
+            document.body.appendChild(toast);
+        }
+
+        toast.innerHTML = `
+            <img class="florea-toast-img" src="${imageUrl}" alt="${name}">
+            <div class="florea-toast-content">
+                <div class="florea-toast-title">Added to Cart</div>
+                <div class="florea-toast-desc">${name} has been added.</div>
+            </div>
+            <button class="florea-toast-close" aria-label="Close toast">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        `;
+
+        toast.querySelector('.florea-toast-close').addEventListener('click', () => {
+            toast.classList.remove('show');
+        });
+
+        setTimeout(() => toast.classList.add('show'), 50);
+
+        if (window.toastTimeout) clearTimeout(window.toastTimeout);
+        window.toastTimeout = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+});
+</script>
+}

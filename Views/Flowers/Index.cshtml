@@ -1,11 +1,21 @@
 @model IEnumerable<Floréa.Models.Flower>
 
+@{
+    ViewData["BodyClass"] = "flowers-page";
+}
+
 <div class="flowers-page py-4">
     <div class="container-fluid">
         <!-- Header -->
         <div class="flowers-header mb-5">
             <h1 class="display-4 fw-bold mb-2">Our Flowers</h1>
             <p class="lead text-muted">Discover our beautiful collection of fresh flowers</p>
+            <div class="flowers-header-actions mt-4">
+                <a asp-area="" asp-controller="Flowers" asp-action="Customize" class="btn customize-btn btn-lg rounded-pill px-4">
+                    <i class="bi bi-magic me-2"></i>
+                    Customize Bouquet
+                </a>
+            </div>
         </div>
 
         <div class="row g-4">
@@ -212,12 +222,30 @@
 
 <style>
 .flowers-page {
-    background: linear-gradient(135deg, var(--color-light) 0%, #fff0f5 100%);
     min-height: 100vh;
 }
 
 .flowers-header {
     text-align: center;
+}
+
+.flowers-header-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.customize-btn {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: white !important;
+    border: none;
+    box-shadow: 0 10px 24px rgba(227, 74, 111, 0.22);
+    transition: var(--transition-bounce);
+}
+
+.customize-btn:hover {
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(227, 74, 111, 0.3);
 }
 
 .filters-panel {

@@ -96,4 +96,10 @@ public class FlowersController : Controller
 
         return View(flowers);
     }
+
+    public IActionResult Customize()
+    {
+        ViewData["BodyClass"] = "customize-page";
+        return View();
+    }
 }
