@@ -82,6 +82,15 @@ public class FlowersController : Controller
                 Price = 30,
                 Category = "Classic",
                 ImageUrl = "/images/hydrangea-cloud.jpg"
+            },
+            new Flower
+            {
+                Id = 9,
+                Name = "Mixed Flower Bouquet",
+                Description = "A vibrant mix of roses, lilies, daisies, and seasonal blooms",
+                Price = 32,
+                Category = "Bouquets",
+                ImageUrl = "/images/mixed-flower-bouquet.jpg"
             }
         };
 

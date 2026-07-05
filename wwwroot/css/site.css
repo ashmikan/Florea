@@ -345,7 +345,7 @@ body.home-page .btn-view-cart:focus {
 .home-panel__image {
   height: 280px;
   border-radius: 24px;
-  background-image: url('https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=900&q=80');
+  background-image: url('/images/rose-bouquet.jpg');
   background-size: cover;
   background-position: center;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
