@@ -1,17 +1,17 @@
-<h1 align="center">🌹 Floréa — Flowers Shop 🌹</h1>
+<h1 align="center">🌹 Floréa - Flower Shop 🌹</h1>
 
-Welcome to Floréa — a small ASP.NET Core MVC sample application showcasing a boutique flower shop UI and a delivery tracking experience.
+Welcome to Floréa! - a small ASP.NET Core MVC sample application showcasing a boutique flower shop UI and a delivery tracking experience.
 
 ---
 
-**Quick status**
+## Quick status
 - Project: Floréa
 - Framework: .NET
 - Key pages: Home, Flowers, Cart, Delivery Tracking, About
 
 ---
 
-**Interactive checklist**
+## Interactive checklist
 - [ ] Build the project
 - [ ] Run locally
 - [ ] Open the Delivery Tracking page
@@ -19,12 +19,12 @@ Welcome to Floréa — a small ASP.NET Core MVC sample application showcasing a 
 
 ---
 
-**Prerequisites**
+## Prerequisites
 - .NET SDK installed (recommended: latest stable)
 - Git (optional)
 - Node/npm only required if you add front-end tooling
 
-**Quick start (local)**
+## Quick start (local)
 1. Restore and build:
 
 ```powershell
@@ -42,7 +42,7 @@ dotnet run --project Floréa.csproj
 
 ---
 
-**Files you will edit often**
+## Files you will edit often
 - Main stylesheet: [wwwroot/css/site.css](wwwroot/css/site.css)
 - Delivery tracking view: [Views/Home/DeliveryTracking.cshtml](Views/Home/DeliveryTracking.cshtml#L1-L240)
 - Navbar partial: [Views/Shared/_OvalNavbar.cshtml](Views/Shared/_OvalNavbar.cshtml#L1-L80)
@@ -50,7 +50,7 @@ dotnet run --project Floréa.csproj
 
 ---
 
-**Why styles sometimes don't apply**
+## Why styles sometimes don't apply
 Common causes when CSS changes appear to be ignored:
 - Load order: CSS included later in the page will override earlier rules. Check `Views/Shared/_Layout.cshtml` where styles are referenced.
 - Specificity: Bootstrap utility classes or rules in other stylesheets may be more specific or loaded after `site.css`.
@@ -63,7 +63,7 @@ How to troubleshoot quickly:
 
 ---
 
-**Delivery Tracking: common edits**
+## Delivery Tracking: common edits
 - To change the layout or copy: edit [Views/Home/DeliveryTracking.cshtml](Views/Home/DeliveryTracking.cshtml#L1-L240).
 - To adjust the order-details card visuals: edit the tracking selectors in [wwwroot/css/site.css](wwwroot/css/site.css#L1500-L1860). Use the `.tracking-page` prefix to keep styles scoped.
 - Example: style the primary action (`Call courier`) with a light-blue background by adding a rule such as:
@@ -77,13 +77,13 @@ How to troubleshoot quickly:
 
 ---
 
-**Navbar (Track button)**
+## Navbar (Track button)
 - The Track item lives in: [Views/Shared/_OvalNavbar.cshtml](Views/Shared/_OvalNavbar.cshtml#L1-L80).
 - If the last pill overflows the rounded capsule, check the wrapper width (there's a `max-width` inline style on the `.oval-nav` container). You can adjust it in the partial or add responsive CSS in `site.css`.
 
 ---
 
-**Developer workflows**
+## Developer workflows
 - Commit small, focused changes (UI, CSS, controller) separately.
 - Suggested commit flow:
   - `git add wwwroot/css/site.css` → `git commit -m "UI: Fix tracking styles"`
@@ -91,7 +91,7 @@ How to troubleshoot quickly:
 
 ---
 
-**Run the app (Windows PowerShell)**
+## Run the app (Windows PowerShell)
 
 ```powershell
 cd "c:\Users\Ashmika\OneDrive\Desktop\Floréa"
@@ -102,7 +102,7 @@ dotnet run --project Floréa.csproj
 
 ---
 
-**Testing & Validation**
+## Testing & Validation
 - Check Razor syntax with a build: `dotnet build`.
 - Validate CSS quickly by opening the page and using DevTools; there is no automated CSS test included by default.
 
@@ -112,5 +112,5 @@ dotnet run --project Floréa.csproj
 
 <div align="center">
 Credit: <a href="https://github.com/ashmikan">Ashmika Nathali </a>
-Last Edited on: 03/06/2026
+Last Edited on: 04/06/2026
 </div>
