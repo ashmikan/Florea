@@ -42,6 +42,24 @@
                                                 <img src="@(string.IsNullOrEmpty(item.Flower.ImageUrl) ? "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?auto=format&fit=crop&w=150&q=80" : item.Flower.ImageUrl)" alt="@item.Flower.Name" class="cart-item-image" />
                                                 <div>
                                                     <div class="cart-item-name fs-5">@item.Flower.Name</div>
+                                                    @if (!string.IsNullOrEmpty(item.Flower.Description))
+                                                    {
+                                                        if (item.Flower.Description.Contains(" | "))
+                                                        {
+                                                            <div class="cart-item-details mt-2">
+                                                                @foreach (var detail in item.Flower.Description.Split(" | "))
+                                                                {
+                                                                    <span class="d-block small text-muted mb-1">
+                                                                        <i class="bi bi-dot text-primary"></i> @detail
+                                                                    </span>
+                                                                }
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="d-block small text-muted mt-1">@item.Flower.Description</span>
+                                                        }
+                                                    }
                                                     @if (!string.IsNullOrEmpty(item.Flower.Category))
                                                     {
                                                         <span class="badge badge-subtle mt-1">@item.Flower.Category</span>

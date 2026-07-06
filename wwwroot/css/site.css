@@ -626,7 +626,9 @@ body.home-page .btn-view-cart:focus {
 
 /* Cart page styles (reuses flowers page background) */
 body.cart-page {
-  background: linear-gradient(135deg, #faf5f7 0%, #fef5f3 100%);
+  background:
+    radial-gradient(circle at 15% 18%, rgba(227, 74, 111, 0.12), transparent 30%),
+    linear-gradient(135deg, #fff8f6 0%, #fff3ef 52%, #fffaf7 100%);
   min-height: 100vh;
   padding-bottom: 4rem;
 }
