@@ -643,6 +643,13 @@ body.login-page {
     linear-gradient(135deg, #fff8fb 0%, #ffffff 42%, #f6f0ff 100%);
 }
 
+body.register-page {
+  background:
+    radial-gradient(circle at 14% 16%, rgba(245, 158, 11, 0.12), transparent 26%),
+    radial-gradient(circle at 86% 18%, rgba(227, 74, 111, 0.14), transparent 28%),
+    linear-gradient(135deg, #fffaf4 0%, #fff7fb 44%, #f3f4ff 100%);
+}
+
 body.login-page .page-shell {
   width: 100%;
   min-height: calc(100vh - 1rem);
@@ -1249,7 +1256,9 @@ body.login-page .page-shell {
 
 /* About Us Page Styles */
 body.about-page {
-  background: linear-gradient(135deg, var(--color-light) 0%, #fff0f5 100%);
+  background:
+    radial-gradient(circle at 15% 18%, rgba(227, 74, 111, 0.12), transparent 30%),
+    linear-gradient(135deg, #fff8f6 0%, #fff3ef 52%, #fffaf7 100%);
   min-height: 100vh;
   padding-bottom: 3rem
 }
@@ -1364,7 +1373,9 @@ body.about-page {
 
 /* Profile page styles */
 body.profile-page {
-  background: linear-gradient(135deg, #f8f9fa 0%, #fef5f3 100%);
+  background:
+    radial-gradient(circle at 15% 18%, rgba(227, 74, 111, 0.12), transparent 30%),
+    linear-gradient(135deg, #fff8f6 0%, #fff3ef 52%, #fffaf7 100%);
   min-height: 100vh;
   padding-bottom: 4rem;
 }
@@ -1552,7 +1563,9 @@ body.profile-page {
 
 /* Delivery tracking page styles */
 body.tracking-page {
-  background: linear-gradient(135deg, #f8fbff 0%, #fff5f2 52%, #f9fafb 100%);
+  background:
+    radial-gradient(circle at 15% 18%, rgba(227, 74, 111, 0.12), transparent 30%),
+    linear-gradient(135deg, #fff8f6 0%, #fff3ef 52%, #fffaf7 100%);
   min-height: 100vh;
   padding-bottom: 4rem;
 }
