@@ -447,7 +447,8 @@ body.home-page .btn-view-cart:focus {
   justify-content: flex-start;
   background: transparent;
   gap: 1.5rem;
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 1000;
   transition: var(--transition-normal);
 }
